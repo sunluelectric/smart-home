@@ -1,161 +1,535 @@
-# project-raspi-firealarm
+# Project: Smart Home
+
+This project provides a smart home solution. Detailed illustrations to the solution are given below. Source codes are given in the corresponding GitHub repository.
+
+The main text of this project focuses on the realization of the project. The backgrounds and preliminary knowledges are briefly summarized in Appendix.
+
+Acknowledgement: This project is jointly developed by Sun Lu and Xing Zhe.
 
 ---
 
-In this project, a __Raspberry Pi based IoT device__ is developed to __detect unattended gas cooktops with fire in a kitchen__. The IoT device uses PiCamera to continuously capture images in a kitchen, and the images are piped to TensorFlow Lite for object detection for human and fire. In the case unattended fire is detected, an alarm is raised and messaged to the user through a cloud infrastructure.
+## Introduction
 
-The key work packages included in this project are:
+TBA
 
-1. Kitchen images capturing and processing
-1. Images labeling
-1. ANN training
-1. Human and fire detection on IoT device
-1. Alarms messaging
+## Architecture Design
 
-Notice that the images labeling and the ANN training will be carried out on separate servers. Regardless, the details of these work packages, including the software used for images labeling and the program for building and training the ANN model are introduced in this project folder.
+There are mainly 3 components within the scope of the project, namely the IoT devices, the local system which provides local services, storage and LAN, and the cloud infrastructure which provides remote access, data display and analysis, and data archive.
 
-__Python 3.9__ is used to develop the majority part of this project. __TensorFlow__ and __TensorFlow Lite__ are the main machine learning engines used for ANN training and real-time object detection.
+### General Architecture Design
 
-Git is used to manage and oversee the project development. Development and testing logs are given in the later part of this document.
+The architecture of the solution of the project is given below.
 
----
+![Project general architecture.](./readme-figs/smart-home-architecture.png)
 
-## Preparation
+Local to the home, a router and a switch are used to create the LAN/WLAN network. A local server, together with local storages, is deployed to provide local services such as access management, local database, graphical user interface, etc. The local server and storages should function normally in the case of an internet blackout.
 
-Configurations such as enabling the PiCamera needs to be setup on the target Raspberry Pi IoT device, and necessary software and associated packages need to be installed. Details are given below.
+Microcomputer/microcontroller based IoT devices are deployed to provide distributed monitoring and control services. For example, in the temperature and air quality control service, temperature and humidity sensors are installed on the IoT devices distributed in different rooms, using which data is collected, analyzed, then used for the control of air conditioners, dehumidifiers and purifiers. 
 
-> Note: use `sudo apt update` and `sudo apt upgrade` to upgrade the OS and installed software before carrying out the remaining procudures.
+AWS is used to provide cloud services. AWS Client VPN is used for secure connection between the local system and the cloud system. Data collected from the smart home is periodically uploaded to the cloud for analysis. Database and data archive functions are integrated into the cloud system. A webpage is deployed for remote access to the smart home.
 
-### Enabling PiCamera
+### Architecture Designs of Each Component
 
-1. Attach a Pi camera to the device.
-1. Use `sudo raspi-config` to open the Raspberry Pi configuration tool.
-1. Navigate to `Interfacing Options` and enable PiCamera.
-1. Reboot the device.
+The architecture designs of the main components of the solution, namely the IoT devices, the local server and storage system, and the cloud system, are introduced as follows.
 
-> Note: consider testing the Pi camera using the `test_camera.py` program. Notice that python should be already installed in the Raspberry Pi OS by default.
+#### IoT Devices
 
-### Installing TensorFlow Lite and its dependencies
+TBA
 
-Depending on the system infrastructure, the required TensorFlow Lite packages and dependencies differ largely. For example, it is often a good practice to run TensorFlow Lite in a virtual environment or a container. This provides an isolated and safe runtime environment for the program, but at the same time add complexity to the packages and dependencies installation and system setup.
+#### Local Server and Storage
 
-In this project, virtual environment is not used, as the IoT device is dedicated for the project. Neither should there be a migration problem in the future.
+TBA
 
-* Dependencies for Raspberry Pi OS
+#### Cloud
 
-The following table gives a list of dependencies for the Raspberry Pi OS that may be helpful with running some of the codes in this project.
+TBA
 
-| Dependency | Explanation |
-| ---------- | ----------- |
-| libjpeg-dev | development files for the JPEG library [dummy package] |
-| libtiff5-dev | Tag Image File Format (TIFF) library, development files |
-| libjasper-dev | development files for the JasPer JPEG-2000 library |
-| libpng12-dev | development files for the PNG library |
-| libavcodec-dev | development files for FFmpeg library with de/encoders for audio/video codecs |
-| libavformat-dev | development files for FFmpeg library with (de)muxers for multimedia containers |
-| libswscale-dev | development files for FFmpeg library for image scaling and various conversions |
-| libv41-dev | a collection of libraries which adds a thin abstraction layer on top of video4linux2 devices |
-| libxvidcore-dev | development files for the open source MPEG-4 video codec |
-| libx264-dev | advanced encoding library for creating H.264 (MPEG-4 AVC) video streams |
-| qtbase5-dev | Qt5 base development files |
-| libatlas-base-dev | automatically tuned linear algebra software |
+## User Interface
 
-> Use `apt-cache search <library-name>` to search for a brief introduction to a dependency, and `apt-cache policy <library-name>` to check the latest version and the installed version of a dependency, if the dependency exists in the repository. Use `sudo apt install <library-name>` to install a dependency.
+TBA
 
-* Python packages
+## IoT Service: Temperature and Air Quality Control
 
-__OpenCV (Open Source Computer Vision Library)__ is an open-source library that includes many computer vision algorithms. Install OpenCV for python using `pip install opencv-python`.
+TBA
 
-__TensorFlow__ and __TensorFlow Lite__ are the main machine learning engines used in this project. Notice that in the IoT device, installation of TensorFlow is optional, as it is used for only ANN training, which is carried out on a separate server. However, installation of TensorFlow Lite runtime is compulsory.  
+## IoT Service: Illumination Control
 
-Use `pip install tensorflow` to install TensorFlow.
+TBA
 
-Use `pip install https://github.com/google-coral/pycoral/releases/download/v2.0.0/tflite_runtime-2.5.0.post1-cp39-cp39-linux_armv7l.whl` to install TensorFlow Lite runtime, if python 3.9 is used. Notice that it is recommended to double check the python version using `python --version` before this installation, and download the associated TensorFlow Lite runtime from the GitHub repository.
+## IoT Service: Hazards and Risks Detection
 
-Use `pip install tflite-support` to install tflite-support, which is a cross-platform library that helps to deploy TensorFlow Lite models onto mobile devices.
+TBA
 
-> An [alternative way](https://pimylifeup.com/raspberry-pi-tensorflow-lite/ "Installing TensorFlow Lite on the Raspberry Pi") of installing TensorFlow Lite runtime is given as follows.
-> 1. Add the repository using
+## Centralized Service: Storage and Subscription Management
+
+TBA
+
+## Cloud Service: Smart Home Management System
+
+TBA
+
+## Conclusions
+
+TBA
+
+## Appendix
+
+Backgrounds and basic configurations to some of the equipment used in this project are summarized in the appendix.
+
+### Linux System Configurations
+
+The centralized local server and the IoT devices are Linux based machines. General configurations to these devices are introduced below.
+
+#### Vim Configurations
+
+The following is added to `~/.vim/vimrc` as part of the Vim configuration.
+
 ```bash
-echo "deb [signed-by=/usr/share/keyrings/coral-edgetpu-archive-keyring.gpg] https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
-```
-> 2. Add its GPG key into the keychains directory using
-```bash
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/coral-edgetpu-archive-keyring.gpg >/dev/null
-```
-> 3. Update the repository and install TensorFlow Lite runtime using
-```bash
-sudo apt update
-sudo apt install python3-tflite-runtime
+call plug#begin()
+Plug 'vim-airline/vim-airline'
+Plug 'joshdick/onedark.vim'
+call plug#end()
+
+inoremap jj <Esc>
+noremap j h
+noremap k j
+noremap i k
+noremap h i
+
+noremap s <nop>
+noremap S :w<CR>
+noremap Q :q<CR>
+
+syntax on
+colorscheme onedark
+
+set number
+set cursorline
+set wrap
+set wildmenu
+
+set hlsearch
+exec "nohlsearch"
+set incsearch
+set ignorecase
+noremap <Space> :nohlsearch<CR>
+noremap - Nzz
+noremap = nzz
+
+noremap sj :set nosplitright<CR>:vsplit<CR>
+noremap sl :set splitright<CR>:vsplit<CR>
+noremap si :set nosplitbelow<CR>:split<CR>
+noremap sk :set splitbelow<CR>:split<CR>
+noremap <C-j> <C-w>h
+noremap <C-l> <C-w>l
+noremap <C-i> <C-w>k
+noremap <C-k> <C-w>j
+noremap J :vertical resize-2<CR>
+noremap L :vertical resize+2<CR>
+noremap I :res+2<CR>
+noremap K :res-2<CR>
+
+set scrolloff=3
+noremap sc :set spell!<CR>
 ```
 
-To verify the installation of TensorFlow Lite, run `python` with the following command
+Notice that Vim plug tools are used in the above configuration. As a prerequisite, ********vim-plug********, a light-size plugin management tool should be installed. Install ********vim-plug******** as follows, as given by its associated GitHub repository [vim-plug (github.com)](https://github.com/junegunn/vim-plug).
+
+First, make sure that cURL is installed with the Linux system. This can be checked using `apt-cache policy curl` . If cURL is not installed, use `sudo apt install curl` to install cURL.
+
+With cURL installed, use the following to install ********vim-plug********.
+
+```bash
+ $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+			https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
+Finally, reload `~/.vim/vimrc` and in the Vim console, and in the cmdline mode, run `:PlugInstall` to install all the plug tools listed in the file.
+
+#### Docker Configurations
+
+Docker engine is one of the most popular container management engines. More details about Docker can be found on its website [Docker](https://www.docker.com/). 
+
+Install Docker as follows. Before installing Docker, make sure to remove existing docker engines if any as follows.
+
+```bash
+$ sudo apt-get remove docker docker-engine docker.io
+$ sudo apt-get remove containerd runc
+```
+
+Next, add Docker’s official GPG key and set up the repository as follows. Notice that Ubuntu system is assumed as an example. For other Linux distributions, check [Index of Linux (docker.com)](https://download.docker.com/linux/) for more details.
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install ca-certificates curl gnupg lsb-release
+$ sudo mkdir -p /etc/apt/keyrings
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo
+gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+$ echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/
+keyrings/docker.gpg] https://download.docker.com/linux/
+ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/
+docker.list > /dev/null
+```
+
+Finally, install Docker (community edition) as follows.
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+To verify the installation, consider using the HelloWorld demo as follows, and relevant message shall pop out at the console.
+
+```bash
+$ sudo docker run hello-world
+```
+
+For convenience, the user can be added to the Docker group to run `docker` commands without using sudo privilege each time as follows.
+
+```bash
+$ sudo usermod <user-name> -aG docker
+```
+
+#### Git Configurations
+
+Git is a software management tool built-in to many Linux distributions. Check and install Git using `apt-cache policy git` and `sudo apt install git` respectively, if necessary.
+
+With Git installed, use the following commands to configure the global information of the user. Notice that the global configuration is stored in `~/.gitconfig` , and local configuration to a repository in `.git/config` in the repository folder.
+
+```bash
+$ git config --global user.name '<user-name>'
+$ git config --global user.email <user email>
+```
+
+Use the following command to download update a clone of a remote repository.
+
+```bash
+$ git clone <remote-repo-url> [<local-directory>]
+$ git remote update
+$ git pull
+```
+
+To push a local commit to the remote repository, use `git push` together with the remote repository login credentials or SSH key.
+
+To add a remote repository for a local repository, use
+
+```bash
+$ git remote add <remote-repo-name> <remote-repo-url>
+```
+
+To set up the default upstream branch (for pull and push) of a local repository branch, use
+
+```bash
+$ git branch --set-upstream-to <remote-repo-name> <remote-repo-branch> 
+```
+
+More details about the Linux system and its configurations can be found in A Notebook Series from A Notebook Series (github.com).
+
+### Brief Introduction to TensorFlow and TensorFlow Lite
+
+TensorFlow and TensorFlow Lite are heavily used in the development of the project as the main artificial intelligence engines. Some introductions and examples to these tools are introduced0 as follows.
+
+#### TensorFlow
+
+TensorFlow is one of the widely used ANN engines. It provides simple, yet powerful and flexible APIs and tools for different use cases and can be customized to meet needs of the users.
+
+Here, we are focusing on using TensorFlow to solve object detection problems. The examples are given from Valliappa Lakshmanan’s book titled *Practical Machine Learning for Computer Vision: End-to-End Machine Learning for Images*.
+
+Arthropod Taxonomy Orders Object Detection dataset from [Kaggle](https://www.kaggle.com/) is used in the example. Three different solutions, namely **You-Only-Look-Once (YOLO)**, **RetinaNet** and **Mask R-CNN** are discussed. Relevant models can be found at [TensorFlow Model Garden's official model repository (github.com)](https://github.com/tensorflow/models/tree/master/official).
+
+Tests are carried out using [Google Colaboratory (google.com)](https://colab.research.google.com/), a platform for easily deploying Python based ANN.
+
+**You-Look-Only-Once (YOLO)**
+
+YOLO implementation is simple and fast, thus used widely in embedded systems. The latest YOLO research and implementation can be found as follows:
+
+- YOLOv1 (original YOLO): [[1506.02640] You Only Look Once: Unified, Real-Time Object Detection (arxiv.org)](https://arxiv.org/abs/1506.02640)
+- YOLOv2: [[1612.08242] YOLO9000: Better, Faster, Stronger (arxiv.org)](https://arxiv.org/abs/1612.08242)
+- YOLOv3: [[1804.02767] YOLOv3: An Incremental Improvement (arxiv.org)](https://arxiv.org/abs/1804.02767)
+- YOLOv4: [[2004.10934] YOLOv4: Optimal Speed and Accuracy of Object Detection (arxiv.org)](https://arxiv.org/abs/2004.10934)
+- YOLOv5: [YOLOv5 (github.com)](https://github.com/ultralytics/yolov5)
+
+Some highlights of the original YOLOv1 are given below.
+
+- CNNx24 + DENSEx2
+- “Grid cells” of number SxS (by default 7x7) are introduced, which divide the image into multiple portions.
+- Each cell detects an object whose ground truth box center is within the cell.
+- The last layer of the ANN decides the probability and boundary box coordinates of an item.
+- An internal variable, namely the “confidence”, is defined as the product of “the probability that there is an item in the boundary box” and “the overlapping between the boundary box and the ground true box”.
+    
+    To get a higher score, the boundary box needs to contain an effective item, and at the same time overlap the ground true box as close as possible. (Notice that both item classes and ground true boxes are known labels of an image.)
+    
+    When an item is associated with multiple boundary boxes, the one with the highest confidence score is eventually selected. This means that the ANN needs to predict the ground true box internally as well.
+    
+- Cost function consists of two components, the classification error and the boundary box coordinate error. For boundary box coordinate, only the selected box receives penalty, i.e., the boxes with wrong coordinates but not selected does not affect the cost function.
+
+YOLOv2-YOLOv5 improve the performance of the system by adopting different network structures and advanced technologies. Some highlights are as follows.
+
+- Batch normalization for faster training.
+- Larger size CNN, including the use of larger and larger residual neural network (ResNet) with skip connection feature. Skip connection feature helps to reduce the weight vanishing effect in a deep network.
+- The use of object detectors that extract information from different layers (instead of only from the bottom layer) of CNN.
+
+There is another technique for object detection, with a similar name You Only Learn One Representation (YOLOR). Details are given at [[2105.04206] You Only Learn One Representation: Unified Network for Multiple Tasks (arxiv.org)](https://arxiv.org/abs/2105.04206), [YOLOR (github.com)](https://github.com/WongKinYiu/yolor).
+
+Notice that TensorFlow may not be well supported for all YOLO versions. For example, YOLOv5 is well supported for PyTorch usage, but not for TensorFlow.
+
+#### TensorFlow Lite
+
+TensorFlow Lite is the on-device machine learning interface optimized for mobile, embedded and edge devices for tasks including image classification, object detection, text classification, audio classification, and speech recognition, etc.
+
+Different from a conventional TensorFlow implementation, TensorFlow Lite does not focus on model building and training, but rather using existing models either downloaded from the community (for example, from [Pre-trained models for TensorFlow Lite](https://www.tensorflow.org/lite/models/trained)) or converted from a TensorFlow model.
+
+Notice that it is also possible to create simple customizable models using TensorFlow Lite Model Maker.
+
+End-to-end examples of implementing TensorFlow Lite on embedded Linux systems can be found at [TensorFlow Lite Examples](https://www.tensorflow.org/lite/examples). 
+
+Here, the object detection on Raspberry Pi is used as an example to illustrate the installation and basic use of TensorFlow Lite. More details are given at [object detection Raspberry Pi (github.com)](https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/raspberry_pi).
+
+> The copyright of all the codes used in this example belongs to:
+> 
+> 
+> ```python
+> # Copyright 2021 The TensorFlow Authors. All Rights Reserved.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> ```
+> 
+
+Notice that the PiCamera shall be configured correctly as a prerequisite before running the example. The configuration of PiCamera is given elsewhere in [IoT Service: Hazards and Risks Detection](https://www.notion.so/IoT-Service-Hazards-and-Risks-Detection-fb07207742704feca3e5f13ab4774389).
+
+**Installation of TensorFlow Lite**
+
+Assume that Python is already installed in the system, and `python3`  used to execute Python. Use the following commands to install TensorFlow Lite.
+
+```bash
+$ python3 -m pip install pip --upgrade
+$ python3 -m pip install -r argparse, numpy, opencv-python
+$ python3 -m pip install -r tflite-runtime, tflite-support, protobuf
+```
+
+**Downloading Models**
+
+Pre-trained models are used in this example. Use the following commands to download the models used in this example.
+
+```bash
+curl \
+    -L 'https://storage.googleapis.com/download.tensorflow.org/ \
+				models/tflite/task_library/object_detection/rpi/ \
+				lite-model_efficientdet_lite0_detection_metadata_1.tflite' \
+    -o ./efficientdet_lite0.tflite
+curl \
+    -L 'https://storage.googleapis.com/download.tensorflow.org/ \
+				models/tflite/task_library/object_detection/rpi/ \
+				efficientdet_lite0_edgetpu_metadata.tflite' \
+    -o ./efficientdet_lite0_edgetpu.tflite
+```
+
+The `.tflite` are the trained models to be used in the example.
+
+**Executing Object Detection Program**
+
+Run the following command to execute the object detection program.
+
+```bash
+$ python3 detect.py --model efficientdet_lite0.tflite
+```
+
+where `[detect.py](http://detect.py)` is given by
+
 ```python
-from tflite_runtime.interpreter import Interpreter
+import argparse
+import sys
+import time
+
+import cv2
+from tflite_support.task import core
+from tflite_support.task import processor
+from tflite_support.task import vision
+import utils
+
+def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
+        enable_edgetpu: bool) -> None:
+  """Continuously run inference on images acquired from the camera.
+  Args:
+    model: Name of the TFLite object detection model.
+    camera_id: The camera id to be passed to OpenCV.
+    width: The width of the frame captured from the camera.
+    height: The height of the frame captured from the camera.
+    num_threads: The number of CPU threads to run the model.
+    enable_edgetpu: True/False whether the model is a EdgeTPU model.
+  """
+
+  # Variables to calculate FPS
+  counter, fps = 0, 0
+  start_time = time.time()
+
+  # Start capturing video input from the camera
+  cap = cv2.VideoCapture(camera_id)
+  cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+  cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+
+  # Visualization parameters
+  row_size = 20  # pixels
+  left_margin = 24  # pixels
+  text_color = (0, 0, 255)  # red
+  font_size = 1
+  font_thickness = 1
+  fps_avg_frame_count = 10
+
+  # Initialize the object detection model
+  base_options = core.BaseOptions(
+      file_name=model, use_coral=enable_edgetpu, num_threads=num_threads)
+  detection_options = processor.DetectionOptions(
+      max_results=3, score_threshold=0.3)
+  options = vision.ObjectDetectorOptions(
+      base_options=base_options, detection_options=detection_options)
+  detector = vision.ObjectDetector.create_from_options(options)
+
+  # Continuously capture images from the camera and run inference
+  while cap.isOpened():
+    success, image = cap.read()
+    if not success:
+      sys.exit(
+          'ERROR: Unable to read from webcam. Please verify your webcam settings.'
+      )
+
+    counter += 1
+    image = cv2.flip(image, 1)
+
+    # Convert the image from BGR to RGB as required by the TFLite model.
+    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    # Create a TensorImage object from the RGB image.
+    input_tensor = vision.TensorImage.create_from_array(rgb_image)
+
+    # Run object detection estimation using the model.
+    detection_result = detector.detect(input_tensor)
+
+    # Draw keypoints and edges on input image
+    image = utils.visualize(image, detection_result)
+
+    # Calculate the FPS
+    if counter % fps_avg_frame_count == 0:
+      end_time = time.time()
+      fps = fps_avg_frame_count / (end_time - start_time)
+      start_time = time.time()
+
+    # Show the FPS
+    fps_text = 'FPS = {:.1f}'.format(fps)
+    text_location = (left_margin, row_size)
+    cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
+                font_size, text_color, font_thickness)
+
+    # Stop the program if the ESC key is pressed.
+    if cv2.waitKey(1) == 27:
+      break
+    cv2.imshow('object_detector', image)
+
+  cap.release()
+  cv2.destroyAllWindows()
+
+def main():
+  parser = argparse.ArgumentParser(
+      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+  parser.add_argument(
+      '--model',
+      help='Path of the object detection model.',
+      required=False,
+      default='efficientdet_lite0.tflite')
+  parser.add_argument(
+      '--cameraId', help='Id of camera.', required=False, type=int, default=0)
+  parser.add_argument(
+      '--frameWidth',
+      help='Width of frame to capture from camera.',
+      required=False,
+      type=int,
+      default=640)
+  parser.add_argument(
+      '--frameHeight',
+      help='Height of frame to capture from camera.',
+      required=False,
+      type=int,
+      default=480)
+  parser.add_argument(
+      '--numThreads',
+      help='Number of CPU threads to run the model.',
+      required=False,
+      type=int,
+      default=4)
+  parser.add_argument(
+      '--enableEdgeTPU',
+      help='Whether to run the model on EdgeTPU.',
+      action='store_true',
+      required=False,
+      default=False)
+  args = parser.parse_args()
+
+  run(args.model, int(args.cameraId), args.frameWidth, args.frameHeight,
+      int(args.numThreads), bool(args.enableEdgeTPU))
+
+if __name__ == '__main__':
+  main()
 ```
-If there is no error messages, the installation is successful.
 
-Other python packages such as `argparse`, `protobuf` are also recommended for installation, as they will simplify the python code programming in later stages. Use `pip install <package-name>` to install these packages.
+and `[utils.py](http://utils.py)` by
 
-## Getting familiar with TensorFlow Lite using demonstration examples
+```python
+import cv2
+import numpy as np
+from tflite_support.task import processor
 
-Demonstration examples can be found from [TensorFlow](https://www.tensorflow.org/lite/examples "TensorFlow Lite Examples"). These examples are great for one to get familiar of using TensorFlow Lite on IoT devices.
+_MARGIN = 10  # pixels
+_ROW_SIZE = 10  # pixels
+_FONT_SIZE = 1
+_FONT_THICKNESS = 1
+_TEXT_COLOR = (0, 0, 255)  # red
 
-In this project, object detection demonstration example is used which helps with the setup of the IoT device, and this sample example is included in `sample-example/`.
+def visualize(
+    image: np.ndarray,
+    detection_result: processor.DetectionResult,
+) -> np.ndarray:
+  """Draws bounding boxes on the input image and return it.
+  Args:
+    image: The input RGB image.
+    detection_result: The list of all "Detection" entities to be visualize.
+  Returns:
+    Image with bounding boxes.
+  """
+  for detection in detection_result.detections:
+    # Draw bounding_box
+    bbox = detection.bounding_box
+    start_point = bbox.origin_x, bbox.origin_y
+    end_point = bbox.origin_x + bbox.width, bbox.origin_y + bbox.height
+    cv2.rectangle(image, start_point, end_point, _TEXT_COLOR, 3)
 
----
+    # Draw label and score
+    category = detection.categories[0]
+    category_name = category.category_name
+    probability = round(category.score, 2)
+    result_text = category_name + ' (' + str(probability) + ')'
+    text_location = (_MARGIN + bbox.origin_x,
+                     _MARGIN + _ROW_SIZE + bbox.origin_y)
+    cv2.putText(image, result_text, text_location, cv2.FONT_HERSHEY_PLAIN,
+                _FONT_SIZE, _TEXT_COLOR, _FONT_THICKNESS)
 
-## Work Package 1: Kitchen images capturing and processing
+  return image
+```
 
-The purpose of this work package is mainly to automatically collect massive images from a kitchen and carry out necessary image processing. These pictures are later transferred to a separate server for image labeling.
+For the above two introductions, the special thanks go to:
 
-There are multiple ways to program a piece of python code to collect massive JPG files taken from the Raspberry Pi Camera. To name a few, it is possible to use `PiCamera` package as used in the `test_camera.py` program, or use `VideoCapture` tool provided by `opencv-python`. Both of the above approaches should satisfy the purpose. Notice that `VideoCapture` approach is more general in the sense that it can be used not only on Raspberry Pi but also other devices as long as it has a camera. Therefore, `VideoCapture` approach is adopted for collecting images in this project.
+- Lakshmanan, Valliappa, Martin Görner, and Ryan Gillard. *Practical Machine Learning for Computer Vision*. "O'Reilly Media, Inc.", 2021.
+- [TensorFlow Lite | ML for Mobile and Edge Devices](https://www.tensorflow.org/lite).
 
----
+Many source codes, models and examples used in these introductions are from either the above resources, or the TensorFlow GitHub repository [tensorflow (github.com)](https://github.com/tensorflow).
 
-## Work Package 2: Images labeling
+### Timeline and Budget
 
-Labeling of images are done not on the IoT device, but on the server with a specific tool.
+The project shall be completed by June 30, 2023, and the total budget planned for this project is 1000 SGD. The budget is used to purchase servers, IoT devices, and subscriptions of online resources.
 
----
-
-## Work Package 3: ANN training
-
----
-
-## Work Package 4: Human and fire detection on IoT device
-
----
-
-## Work Package 5: Alarms messaging
-
----
-
-## Development Logs
-
-20220821 - Get starter model with metadata from [TensorFlow](https://www.tensorflow.org/lite/examples/object_detection/overview "TensorFlow > Learn > For Mobile & Edge > Examples"), and store the tflite model in `sample/` directory. Download sample programs from [TensorFlow GitHub](https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/raspberry_pi "tensorflow/examples/lite/examples/object_detection/raspberry_pi/") for testing and analysis purpose.
-
-
----
-
-## Testing Logs
-
----
-
-## References
-
-* Books
-
-  > Szeliski, R., 2010. Computer vision: algorithms and applications. Springer Science & Business Media.
-
-  > Lakshmanan, V., Görner, M. and Gillard, R., 2021. Practical Machine Learning for Computer Vision. O'Reilly Media, Incorporated.
-
-* Tutorials
-
-  > freeCodeCamp.org, https://youtu.be/tPYj3fFJGjk
-
-  > Python Engineer, https://youtu.be/c36lUUr864M
-
-  > Edge Electronics, https://youtu.be/aimSGOAUI8Y
-
-  > Nicholas Renotte, https://youtu.be/yqkISICHH-U
+| Item | Cost |
+| --- | --- |
+| Beelink Mini PC Wi11 Pro, Mini S | 179.25 |
+| TOTAL | 179.25 |
