@@ -1,8 +1,6 @@
 # Project: Smart Home
 
-This project provides a smart home solution. Detailed illustrations to the solution are given below. Source codes are given in the corresponding GitHub repository.
-
-The main text of this project focuses on the realization of the project. The backgrounds and preliminary knowledges are briefly summarized in Appendix.
+This project provides a smart home solution. Details are given in the rest of this README document. Source codes are given in the GitHub repository.
 
 Acknowledgement: This project is jointly developed by Sun Lu and Xing Zhe.
 
@@ -14,7 +12,13 @@ TBA
 
 ## Architecture Design
 
-There are mainly 3 components within the scope of the project, namely the IoT devices, the local system which provides local services, storage and LAN, and the cloud infrastructure which provides remote access, data display and analysis, and data archive.
+There are mainly 3 components under the scope of the project, namely the IoT devices, the (local) server, and the cloud platform.
+
+The IoT devices collect measurements such as temperature, humidity, illumination and images, and subsequently upload them to the server. Some of them also provides HMI to the residents.
+
+The server hosts a smart home management system that provides data acquisition, database and network-attached storage services. A graphical interface running on a webpage is developed in the server, which can be accessed using a browser from the LAN.
+
+The server is configured as a gateway to the Amazon Web Services cloud platform. The cloud platform archives the data generated from the smart home and provides remote access to the smart home management system.
 
 ### General Architecture Design
 
@@ -74,158 +78,150 @@ TBA
 
 ## Appendix
 
-Backgrounds and basic configurations to some of the equipment used in this project are summarized in the appendix.
+Basic setups, backgrounds, list of materials and project budget are given in the Appendix.
 
-### Linux System Configurations
+### Local Server Setup
 
-The centralized local server and the IoT devices are Linux based machines. General configurations to these devices are introduced below.
+Beelink Mini PC Wi11 Pro, Mini S with Ubuntu 22.04 LTS (minimal installation) is used as the starting point of the smart home local server. Upon completion of installation, the PC shall have a sudo user and a hostname, and shall have internet connection.
 
-#### Vim Configurations
-
-The following is added to `~/.vim/vimrc` as part of the Vim configuration.
+The following installations form the basis of the server infrastructure, and only after they are installed can we proceed with other software installations. 
 
 ```bash
-call plug#begin()
-Plug 'vim-airline/vim-airline'
-Plug 'joshdick/onedark.vim'
-call plug#end()
+# update system
+sudo apt update; sudo apt upgrade
 
-inoremap jj <Esc>
-noremap j h
-noremap k j
-noremap i k
-noremap h i
+# install c compiler
+sudo apt install gcc
 
-noremap s <nop>
-noremap S :w<CR>
-noremap Q :q<CR>
+# install curl
+sudo apt install curl
 
-syntax on
-colorscheme onedark
+# install and configure git
+sudo apt install git
+git config --global user.name 'sunlu'
+git config --global user.email sunlu.electric@gmail.com
 
-set number
-set cursorline
-set wrap
-set wildmenu
+# install vim
+sudo apt install vim
 
-set hlsearch
-exec "nohlsearch"
-set incsearch
-set ignorecase
-noremap <Space> :nohlsearch<CR>
-noremap - Nzz
-noremap = nzz
+# install vim.plug and configure vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl "https://raw.githubusercontent.com/sunluelectric/smart-home/master/configs/.vimrc" > ~/.vimrc
+vim +PlugInstall +qall
 
-noremap sj :set nosplitright<CR>:vsplit<CR>
-noremap sl :set splitright<CR>:vsplit<CR>
-noremap si :set nosplitbelow<CR>:split<CR>
-noremap sk :set splitbelow<CR>:split<CR>
-noremap <C-j> <C-w>h
-noremap <C-l> <C-w>l
-noremap <C-i> <C-w>k
-noremap <C-k> <C-w>j
-noremap J :vertical resize-2<CR>
-noremap L :vertical resize+2<CR>
-noremap I :res+2<CR>
-noremap K :res-2<CR>
-
-set scrolloff=3
-noremap sc :set spell!<CR>
+# install ssh client and server, and enable server
+sudo apt install openssh-client
+sudo apt install openssh-server
+sudo systemctl enable ssh --now
+sudo systemctl start ssh
 ```
 
-Notice that Vim plug tools are used in the above configuration. As a prerequisite, ********vim-plug********, a light-size plugin management tool should be installed. Install ********vim-plug******** as follows, as given by its associated GitHub repository [vim-plug (github.com)](https://github.com/junegunn/vim-plug).
+For the convenience of project development, the repository on GitHub, sunluelectric/smart-home, is cloned to the server as follows.
 
-First, make sure that cURL is installed with the Linux system. This can be checked using `apt-cache policy curl` . If cURL is not installed, use `sudo apt install curl` to install cURL.
+Follow the instructions given by GitHub given [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to generate SSH key pair and register the public key at GitHub. Use `git clone` to clone the project folder to the server.
 
-With cURL installed, use the following to install ********vim-plug********.
+The following installations form the basic development environment in the server. The “centralized intelligence” of the server will be built from these installations, and shared among all the services the server is to provide. 
 
 ```bash
- $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-			https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# install and configure Python
+sudo apt install python3
+sudo apt install python-is-python3
+
+# install miniconda
+cd ~/Downloads
+wget https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh # Go to miniconda website to find the latest link
+bash Miniconda3-py310_22.11.1-1-Linux-x86_64.sh # Use the downloaded file name
+# (restart shell)
+conda activate base
+conda update conda
+# create environment
+conda create --name smart-home-dev # smart home development general environment
+conda activate smart-home-dev
+conda install conda
+# install useful packages in environment smart-home-dev
+conda install numpy scipy pandas
+conda install scikit-learn
+conda install matplotlib
+conda install jupyter
+conda install tensorflow pytorch
+# disable conda auto activate
+conda config --set auto_activate_base false
+# deactivate conda environment
+conda deactivate
+
+# install R language
+sudo apt update; sudo apt upgrade
+sudo apt install r-base
+
+# install octave and its packages
+cd
+sudo apt install octave
+sudo apt install octave-control octave-image octave-io octave-optim octave-signal octave-statistics
+
 ```
 
-Finally, reload `~/.vim/vimrc` and in the Vim console, and in the cmdline mode, run `:PlugInstall` to install all the plug tools listed in the file.
-
-#### Docker Configurations
-
-Docker engine is one of the most popular container management engines. More details about Docker can be found on its website [Docker](https://www.docker.com/). 
-
-Install Docker as follows. Before installing Docker, make sure to remove existing docker engines if any as follows.
+Notice that since no monitor is connected to the server in most occasions, it makes no point starting a jupyter notebook on a local browser. It is possible to run jupyter notebook on the server, and access it remotely as follows.
 
 ```bash
-$ sudo apt-get remove docker docker-engine docker.io
-$ sudo apt-get remove containerd runc
+conda activate smart-home-dev
+jupyter notebook --no-browser --port=8080 --ip=0.0.0.0
 ```
 
-Next, add Docker’s official GPG key and set up the repository as follows. Notice that Ubuntu system is assumed as an example. For other Linux distributions, check [Index of Linux (docker.com)](https://download.docker.com/linux/) for more details.
+Then in the remote machine, open a web browser and use URL `http://<server-ip>:8080` to access the jupyter notebook remotely.
+
+Install MariaDB as follows. In this project, MariaDB is the main DBMS to be adopted in the server.
 
 ```bash
-$ sudo apt-get update
-$ sudo apt-get install ca-certificates curl gnupg lsb-release
-$ sudo mkdir -p /etc/apt/keyrings
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo
-gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-$ echo \
-"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/
-keyrings/docker.gpg] https://download.docker.com/linux/
-ubuntu \
-$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/
-docker.list > /dev/null
+# install mariadb
+sudo apt update
+sudo apt install mariadb-server
+sudo systemctl start mariadb.service
+# check mariadb status using sudo systemctl status mariadb
+# configure mariadb secure installation
+sudo mysql_secure_installation
+# install development kit for future Python connection
+sudo apt install libmariadb-dev
 ```
 
-Finally, install Docker (community edition) as follows.
+Upon successful installation and configuration of MariaDB, login to MariaDB using `sudo mariadb`, and create an admin user as follows.
+
+```sql
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON *.* TO '<user-name>'@'localhost' IDENTIFIED BY '<user-password>' WITH GRANT OPTION;
+MariaDB [(none)]> FLUSH PRIVILEGES;
+```
+
+Should there be remote database access requirement, grand a user with a remote IP address the above privileges. Configure MariaDB configuration file (usually `/etc/mysql/my.conf`) to disable binding address by adding
+
+```sql
+[mysqld]
+skip-networking=0
+skip-bind-address
+```
+
+to the file.
+
+
+Finally, install docker engine as follows. Containerization is used to logically separate and enhance portability of the upper-layer functions and services, such as hosting a web page or a statistics dashboard.
 
 ```bash
-$ sudo apt-get update
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+# install docker engine
+sudo apt remove docker docker-engine docker.io
+sudo apt remove containerd runc
+sudo apt update
+sudo apt install ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+# test docker installation by running sudo docker run hello-world
+sudo usermod <user-name> -aG docker
 ```
 
-To verify the installation, consider using the HelloWorld demo as follows, and relevant message shall pop out at the console.
-
-```bash
-$ sudo docker run hello-world
-```
-
-For convenience, the user can be added to the Docker group to run `docker` commands without using sudo privilege each time as follows.
-
-```bash
-$ sudo usermod <user-name> -aG docker
-```
-
-#### Git Configurations
-
-Git is a software management tool built-in to many Linux distributions. Check and install Git using `apt-cache policy git` and `sudo apt install git` respectively, if necessary.
-
-With Git installed, use the following commands to configure the global information of the user. Notice that the global configuration is stored in `~/.gitconfig` , and local configuration to a repository in `.git/config` in the repository folder.
-
-```bash
-$ git config --global user.name '<user-name>'
-$ git config --global user.email <user email>
-```
-
-Use the following command to download update a clone of a remote repository.
-
-```bash
-$ git clone <remote-repo-url> [<local-directory>]
-$ git remote update
-$ git pull
-```
-
-To push a local commit to the remote repository, use `git push` together with the remote repository login credentials or SSH key.
-
-To add a remote repository for a local repository, use
-
-```bash
-$ git remote add <remote-repo-name> <remote-repo-url>
-```
-
-To set up the default upstream branch (for pull and push) of a local repository branch, use
-
-```bash
-$ git branch --set-upstream-to <remote-repo-name> <remote-repo-branch> 
-```
-
-More details about the Linux system and its configurations can be found in A Notebook Series from A Notebook Series (github.com).
+The following services are executed in containers in the local server.
 
 ### Brief Introduction to TensorFlow and TensorFlow Lite
 
