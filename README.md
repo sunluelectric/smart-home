@@ -12,13 +12,15 @@ TBA
 
 ## Architecture Design
 
-There are mainly 3 components under the scope of the project, namely the IoT devices, the (local) server, and the cloud platform.
+The project adopts a 3-layer structure, namely the IoT, the (local) server, and the cloud platform layers.
 
 The IoT devices collect measurements such as temperature, humidity, illumination and images, and subsequently upload them to the server. Some of them also provides HMI to the residents.
 
 The server hosts a smart home management system that provides data acquisition, database and network-attached storage services. A graphical interface running on a webpage is developed in the server, which can be accessed using a browser from the LAN.
 
 The server is configured as a gateway to the Amazon Web Services cloud platform. The cloud platform archives the data generated from the smart home and provides remote access to the smart home management system.
+
+Each above layer is associated with an human-machine interface. Some of the IoT devices may provide simple interfaces, allowing the residents to quickly check and control some of the sensors and actuators deployed in the home. The server provides a web based interface that allows the residents to interact with the smart home management system. Finally in the upper layer, the cloud provides an interface for remote access to the smart home management system as well as checking archived data.
 
 ### General Architecture Design
 
@@ -48,10 +50,6 @@ TBA
 
 TBA
 
-## User Interface
-
-TBA
-
 ## IoT Service: Temperature and Air Quality Control
 
 TBA
@@ -64,11 +62,13 @@ TBA
 
 TBA
 
-## Centralized Service: Storage and Subscription Management
+## Centralized Service: Smart Home Management System
 
-TBA
+### Web Interface
 
-## Cloud Service: Smart Home Management System
+A web server is deployed in a container, on which a web interface is developed. Details are given below.
+
+## Cloud Service: Data Archive and Remote Access to Smart Home Management System
 
 TBA
 
@@ -525,7 +525,7 @@ Many source codes, models and examples used in these introductions are from eith
 
 The project shall be completed by June 30, 2023, and the total budget planned for this project is 1000 SGD. The budget is used to purchase servers, IoT devices, and subscriptions of online resources.
 
-| Item | Cost |
+| Item | Cost (S$) |
 | --- | --- |
 | Beelink Mini PC Wi11 Pro, Mini S | 179.25 |
 | TOTAL | 179.25 |
