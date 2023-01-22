@@ -80,10 +80,10 @@ where notice that if a specific version of `httpd` is required, use `httpd:<vers
 
 Start `httpd` container as follows
 ```bash
-docker run -dit --name smart-home-server-web -p 8080:80 -v ~/smart-home/services/web/htdocs/:/usr/local/apache2/htdocs/ httpd
+docker run -dit --name smart-home-server-web -p 80:80 -v ~/smart-home/services/web/htdocs/:/usr/local/apache2/htdocs/ --restart always httpd
 ```
 
-To verify whether the container is running correctly, save any `html` file inside `~/smart-home/services/web/htdocs/` (for demonstration, just download any sample `html` file from online). From any machine in the same LAN with the server, open a web browser and and browse to `http://<server-ip>:8080` to view the result.
+To verify whether the container is running correctly, save any `html` file inside `~/smart-home/services/web/htdocs/` (for demonstration, just download any sample `html` file from online). From any machine in the same LAN with the server, open a web browser and and browse to `http://<server-ip>` to view the result.
 
 
 
@@ -188,10 +188,10 @@ Notice that since no monitor is connected to the server in most occasions, it ma
 
 ```bash
 conda activate smart-home-dev
-jupyter notebook --no-browser --port=8081 --ip=0.0.0.0
+jupyter notebook --no-browser --port=8080 --ip=0.0.0.0
 ```
 
-Then in the remote machine, open a web browser and use URL `http://<server-ip>:8081` to access the jupyter notebook remotely.
+Then in the remote machine, open a web browser and use URL `http://<server-ip>:8080` to access the jupyter notebook remotely.
 
 Install MariaDB as follows. In this project, MariaDB is the main DBMS to be adopted in the server.
 
