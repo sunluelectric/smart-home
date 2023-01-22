@@ -188,10 +188,10 @@ Notice that since no monitor is connected to the server in most occasions, it ma
 
 ```bash
 conda activate smart-home-dev
-jupyter notebook --no-browser --port=8080 --ip=0.0.0.0
+jupyter notebook --no-browser --port=8081 --ip=0.0.0.0
 ```
 
-Then in the remote machine, open a web browser and use URL `http://<server-ip>:8080` to access the jupyter notebook remotely.
+Then in the remote machine, open a web browser and use URL `http://<server-ip>:8081` to access the jupyter notebook remotely.
 
 Install MariaDB as follows. In this project, MariaDB is the main DBMS to be adopted in the server.
 
