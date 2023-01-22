@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Project&colon; Smart Home</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="project-smart-home">Project: Smart Home</h1>
+<p>This project provides a smart home solution. Details are given in the rest of this README document. Source codes are given in the GitHub repository.</p>
+<p>Acknowledgement: This project is jointly developed by Sun Lu and Xing Zhe.</p>
+<hr>
+<h2 id="introduction">Introduction</h2>
+<p>TBA</p>
+<h2 id="architecture-design">Architecture Design</h2>
+<p>The project adopts a 3-layer structure, namely the IoT, the (local) server, and the cloud platform layers.</p>
+<p>The IoT devices collect measurements such as temperature, humidity, illumination and images, and subsequently upload them to the server. Some of them also provides HMI to the residents.</p>
+<p>The server hosts a smart home management system that provides data acquisition, database and network-attached storage services. A graphical interface running on a webpage is developed in the server, which can be accessed using a browser from the LAN.</p>
+<p>The server is configured as a gateway to the Amazon Web Services cloud platform. The cloud platform archives the data generated from the smart home and provides remote access to the smart home management system.</p>
+<p>Each above layer is associated with an human-machine interface. Some of the IoT devices may provide simple interfaces, allowing the residents to quickly check and control some of the sensors and actuators deployed in the home. The server provides a web based interface that allows the residents to interact with the smart home management system. Finally in the upper layer, the cloud provides an interface for remote access to the smart home management system as well as checking archived data.</p>
+<h3 id="general-architecture-design">General Architecture Design</h3>
+<p>The architecture of the solution of the project is given below.</p>
+<p><img src="file:///d:\Dropbox\Community Projects\smart-home\readme-figs\smart-home-architecture.png" alt="Project general architecture."></p>
+<p>Local to the home, a router and a switch are used to create the LAN/WLAN network. A local server, together with local storages, is deployed to provide local services such as access management, local database, graphical user interface, etc. The local server and storages should function normally in the case of an internet blackout.</p>
+<p>Microcomputer/microcontroller based IoT devices are deployed to provide distributed monitoring and control services. For example, in the temperature and air quality control service, temperature and humidity sensors are installed on the IoT devices distributed in different rooms, using which data is collected, analyzed, then used for the control of air conditioners, dehumidifiers and purifiers.</p>
+<p>AWS is used to provide cloud services. AWS Client VPN is used for secure connection between the local system and the cloud system. Data collected from the smart home is periodically uploaded to the cloud for analysis. Database and data archive functions are integrated into the cloud system. A webpage is deployed for remote access to the smart home.</p>
+<h3 id="architecture-designs-of-each-component">Architecture Designs of Each Component</h3>
+<p>The architecture designs of the main components of the solution, namely the IoT devices, the local server and storage system, and the cloud system, are introduced as follows.</p>
+<h4 id="iot-devices">IoT Devices</h4>
+<p>TBA</p>
+<h4 id="local-server-and-storage">Local Server and Storage</h4>
+<p>TBA</p>
+<h4 id="cloud">Cloud</h4>
+<p>TBA</p>
+<h2 id="iot-service-temperature-and-air-quality-control">IoT Service: Temperature and Air Quality Control</h2>
+<p>TBA</p>
+<h2 id="iot-service-illumination-control">IoT Service: Illumination Control</h2>
+<p>TBA</p>
+<h2 id="iot-service-hazards-and-risks-detection">IoT Service: Hazards and Risks Detection</h2>
+<p>TBA</p>
+<h2 id="centralized-service-smart-home-management-system">Centralized Service: Smart Home Management System</h2>
+<h3 id="web-interface">Web Interface</h3>
+<p>A web server is deployed in a container, on which a web interface is developed. PHP is used in the programming of the web interface. Details are given below.</p>
+<p>Apache is used as the website server. Make sure that the latest version of its corresponding docker image, <code>httpd</code>, is downloaded to the machine. A detailed introduction to the use of <code>httpd</code> can be found at <a href="https://hub.docker.com/_/httpd" title="https://hub.docker.com/_/httpd">httpd</a> from docker hub.</p>
+<p>There are two ways to obtain the <code>httpd</code> image, namely building it using a docker file, or downloading it from docker hub. The second way is implemented here.</p>
+<p>To download and update the <code>httpd</code> image, use the following</p>
+<pre><code class="language-bash">docker pull httpd
+</code></pre>
+<p>where notice that if a specific version of <code>httpd</code> is required, use <code>httpd:&lt;version&gt;</code> in the above command instead.</p>
+<h2 id="cloud-service-data-archive-and-remote-access-to-smart-home-management-system">Cloud Service: Data Archive and Remote Access to Smart Home Management System</h2>
+<p>TBA</p>
+<h2 id="conclusions">Conclusions</h2>
+<p>TBA</p>
+<h2 id="appendix">Appendix</h2>
+<p>Basic setups, backgrounds, list of materials and project budget are given in the Appendix.</p>
+<h3 id="local-server-setup">Local Server Setup</h3>
+<p>Beelink Mini PC Wi11 Pro, Mini S with Ubuntu 22.04 LTS (minimal installation) is used as the starting point of the smart home local server. Upon completion of installation, the PC shall have a sudo user and a hostname, and shall have internet connection.</p>
+<p>The following installations form the basis of the server infrastructure, and only after they are installed can we proceed with other software installations.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># update system</span>
+sudo apt update; sudo apt upgrade
+
+<span class="hljs-comment"># install c compiler</span>
+sudo apt install gcc
+
+<span class="hljs-comment"># install curl</span>
+sudo apt install curl
+
+<span class="hljs-comment"># install net-tools</span>
+sudo apt install net-tools
+
+<span class="hljs-comment"># install and configure git</span>
+sudo apt install git
+git config --global user.name <span class="hljs-string">&#x27;sunlu&#x27;</span>
+git config --global user.email sunlu.electric@gmail.com
+
+<span class="hljs-comment"># install vim</span>
+sudo apt install vim
+
+<span class="hljs-comment"># install vim.plug and configure vim</span>
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl <span class="hljs-string">&quot;https://raw.githubusercontent.com/sunluelectric/smart-home/master/configs/.vimrc&quot;</span> &gt; ~/.vimrc
+vim +PlugInstall +qall
+
+<span class="hljs-comment"># install ssh client and server, and enable server</span>
+sudo apt install openssh-client
+sudo apt install openssh-server
+sudo systemctl <span class="hljs-built_in">enable</span> ssh --now
+sudo systemctl start ssh
+</code></pre>
+<p>For the convenience of project development, the repository on GitHub, sunluelectric/smart-home, is cloned to the server as follows.</p>
+<p>Follow the instructions given by GitHub given <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">here</a> to generate SSH key pair and register the public key at GitHub. Use <code>git clone</code> to clone the project folder to the server.</p>
+<p>The following installations form the basic development environment in the server. The “centralized intelligence” of the server will be built from these installations, and shared among all the services the server is to provide.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># install and configure Python</span>
+sudo apt install python3
+sudo apt install python-is-python3
+
+<span class="hljs-comment"># install miniconda</span>
+<span class="hljs-built_in">cd</span> ~/Downloads
+wget https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh <span class="hljs-comment"># Go to miniconda website to find the latest link</span>
+bash Miniconda3-py310_22.11.1-1-Linux-x86_64.sh <span class="hljs-comment"># Use the downloaded file name</span>
+<span class="hljs-comment"># (restart shell)</span>
+conda activate base
+conda update conda
+<span class="hljs-comment"># create environment</span>
+conda create --name smart-home-dev <span class="hljs-comment"># smart home development general environment</span>
+conda activate smart-home-dev
+conda install conda
+<span class="hljs-comment"># install useful packages in environment smart-home-dev</span>
+conda install numpy scipy pandas
+conda install scikit-learn
+conda install matplotlib
+conda install jupyter
+conda install tensorflow pytorch
+<span class="hljs-comment"># disable conda auto activate</span>
+conda config --<span class="hljs-built_in">set</span> auto_activate_base <span class="hljs-literal">false</span>
+<span class="hljs-comment"># deactivate conda environment</span>
+conda deactivate
+
+<span class="hljs-comment"># install R language</span>
+sudo apt update; sudo apt upgrade
+sudo apt install r-base
+
+<span class="hljs-comment"># install octave and its packages</span>
+<span class="hljs-built_in">cd</span>
+sudo apt install octave
+sudo apt install octave-control octave-image octave-io octave-optim octave-signal octave-statistics
+
+</code></pre>
+<p>Notice that since no monitor is connected to the server in most occasions, it makes no point starting a jupyter notebook on a local browser. It is possible to run jupyter notebook on the server, and access it remotely as follows.</p>
+<pre><code class="language-bash">conda activate smart-home-dev
+jupyter notebook --no-browser --port=8080 --ip=0.0.0.0
+</code></pre>
+<p>Then in the remote machine, open a web browser and use URL <code>http://&lt;server-ip&gt;:8080</code> to access the jupyter notebook remotely.</p>
+<p>Install MariaDB as follows. In this project, MariaDB is the main DBMS to be adopted in the server.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># install mariadb</span>
+sudo apt update
+sudo apt install mariadb-server
+sudo systemctl start mariadb.service
+<span class="hljs-comment"># check mariadb status using sudo systemctl status mariadb</span>
+<span class="hljs-comment"># configure mariadb secure installation</span>
+sudo mysql_secure_installation
+<span class="hljs-comment"># install development kit for future Python connection</span>
+sudo apt install libmariadb-dev
+</code></pre>
+<p>Upon successful installation and configuration of MariaDB, login to MariaDB using <code>sudo mariadb</code>, and create an admin user as follows.</p>
+<pre><code class="language-sql">MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> <span class="hljs-operator">*</span>.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;&lt;user-name&gt;&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;&lt;user-password&gt;&#x27;</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">GRANT</span> OPTION;
+MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> FLUSH PRIVILEGES;
+</code></pre>
+<p>Should there be remote database access requirement, grand a user with a remote IP address the above privileges. Configure MariaDB configuration file (usually <code>/etc/mysql/my.conf</code>) to disable binding address by adding</p>
+<pre><code class="language-sql">[mysqld]
+<span class="hljs-keyword">skip</span><span class="hljs-operator">-</span>networking<span class="hljs-operator">=</span><span class="hljs-number">0</span>
+<span class="hljs-keyword">skip</span><span class="hljs-operator">-</span>bind<span class="hljs-operator">-</span>address
+</code></pre>
+<p>to the file.</p>
+<p>Finally, install docker engine as follows. Containerization is used to logically separate and enhance portability of the upper-layer functions and services, such as hosting a web page or a statistics dashboard.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># install docker engine</span>
+sudo apt remove docker docker-engine docker.io
+sudo apt remove containerd runc
+sudo apt update
+sudo apt install ca-certificates curl gnupg lsb-release
+sudo <span class="hljs-built_in">mkdir</span> -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+<span class="hljs-built_in">echo</span> \
+  <span class="hljs-string">&quot;deb [arch=<span class="hljs-subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  <span class="hljs-subst">$(lsb_release -cs)</span> stable&quot;</span> | sudo <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+<span class="hljs-comment"># test docker installation by running sudo docker run hello-world</span>
+sudo usermod &lt;user-name&gt; -aG docker
+</code></pre>
+<p>The following services are executed in containers in the local server.</p>
+<h3 id="brief-introduction-to-tensorflow-and-tensorflow-lite">Brief Introduction to TensorFlow and TensorFlow Lite</h3>
+<p>TensorFlow and TensorFlow Lite are heavily used in the development of the project as the main artificial intelligence engines. Some introductions and examples to these tools are introduced0 as follows.</p>
+<h4 id="tensorflow">TensorFlow</h4>
+<p>TensorFlow is one of the widely used ANN engines. It provides simple, yet powerful and flexible APIs and tools for different use cases and can be customized to meet needs of the users.</p>
+<p>Here, we are focusing on using TensorFlow to solve object detection problems. The examples are given from Valliappa Lakshmanan’s book titled <em>Practical Machine Learning for Computer Vision: End-to-End Machine Learning for Images</em>.</p>
+<p>Arthropod Taxonomy Orders Object Detection dataset from <a href="https://www.kaggle.com/">Kaggle</a> is used in the example. Three different solutions, namely <strong>You-Only-Look-Once (YOLO)</strong>, <strong>RetinaNet</strong> and <strong>Mask R-CNN</strong> are discussed. Relevant models can be found at <a href="https://github.com/tensorflow/models/tree/master/official">TensorFlow Model Garden's official model repository (github.com)</a>.</p>
+<p>Tests are carried out using <a href="https://colab.research.google.com/">Google Colaboratory (google.com)</a>, a platform for easily deploying Python based ANN.</p>
+<p><strong>You-Look-Only-Once (YOLO)</strong></p>
+<p>YOLO implementation is simple and fast, thus used widely in embedded systems. The latest YOLO research and implementation can be found as follows:</p>
+<ul>
+<li>YOLOv1 (original YOLO): <a href="https://arxiv.org/abs/1506.02640">[1506.02640] You Only Look Once: Unified, Real-Time Object Detection (arxiv.org)</a></li>
+<li>YOLOv2: <a href="https://arxiv.org/abs/1612.08242">[1612.08242] YOLO9000: Better, Faster, Stronger (arxiv.org)</a></li>
+<li>YOLOv3: <a href="https://arxiv.org/abs/1804.02767">[1804.02767] YOLOv3: An Incremental Improvement (arxiv.org)</a></li>
+<li>YOLOv4: <a href="https://arxiv.org/abs/2004.10934">[2004.10934] YOLOv4: Optimal Speed and Accuracy of Object Detection (arxiv.org)</a></li>
+<li>YOLOv5: <a href="https://github.com/ultralytics/yolov5">YOLOv5 (github.com)</a></li>
+</ul>
+<p>Some highlights of the original YOLOv1 are given below.</p>
+<ul>
+<li>
+<p>CNNx24 + DENSEx2</p>
+</li>
+<li>
+<p>“Grid cells” of number SxS (by default 7x7) are introduced, which divide the image into multiple portions.</p>
+</li>
+<li>
+<p>Each cell detects an object whose ground truth box center is within the cell.</p>
+</li>
+<li>
+<p>The last layer of the ANN decides the probability and boundary box coordinates of an item.</p>
+</li>
+<li>
+<p>An internal variable, namely the “confidence”, is defined as the product of “the probability that there is an item in the boundary box” and “the overlapping between the boundary box and the ground true box”.</p>
+<p>To get a higher score, the boundary box needs to contain an effective item, and at the same time overlap the ground true box as close as possible. (Notice that both item classes and ground true boxes are known labels of an image.)</p>
+<p>When an item is associated with multiple boundary boxes, the one with the highest confidence score is eventually selected. This means that the ANN needs to predict the ground true box internally as well.</p>
+</li>
+<li>
+<p>Cost function consists of two components, the classification error and the boundary box coordinate error. For boundary box coordinate, only the selected box receives penalty, i.e., the boxes with wrong coordinates but not selected does not affect the cost function.</p>
+</li>
+</ul>
+<p>YOLOv2-YOLOv5 improve the performance of the system by adopting different network structures and advanced technologies. Some highlights are as follows.</p>
+<ul>
+<li>Batch normalization for faster training.</li>
+<li>Larger size CNN, including the use of larger and larger residual neural network (ResNet) with skip connection feature. Skip connection feature helps to reduce the weight vanishing effect in a deep network.</li>
+<li>The use of object detectors that extract information from different layers (instead of only from the bottom layer) of CNN.</li>
+</ul>
+<p>There is another technique for object detection, with a similar name You Only Learn One Representation (YOLOR). Details are given at <a href="https://arxiv.org/abs/2105.04206">[2105.04206] You Only Learn One Representation: Unified Network for Multiple Tasks (arxiv.org)</a>, <a href="https://github.com/WongKinYiu/yolor">YOLOR (github.com)</a>.</p>
+<p>Notice that TensorFlow may not be well supported for all YOLO versions. For example, YOLOv5 is well supported for PyTorch usage, but not for TensorFlow.</p>
+<h4 id="tensorflow-lite">TensorFlow Lite</h4>
+<p>TensorFlow Lite is the on-device machine learning interface optimized for mobile, embedded and edge devices for tasks including image classification, object detection, text classification, audio classification, and speech recognition, etc.</p>
+<p>Different from a conventional TensorFlow implementation, TensorFlow Lite does not focus on model building and training, but rather using existing models either downloaded from the community (for example, from <a href="https://www.tensorflow.org/lite/models/trained">Pre-trained models for TensorFlow Lite</a>) or converted from a TensorFlow model.</p>
+<p>Notice that it is also possible to create simple customizable models using TensorFlow Lite Model Maker.</p>
+<p>End-to-end examples of implementing TensorFlow Lite on embedded Linux systems can be found at <a href="https://www.tensorflow.org/lite/examples">TensorFlow Lite Examples</a>.</p>
+<p>Here, the object detection on Raspberry Pi is used as an example to illustrate the installation and basic use of TensorFlow Lite. More details are given at <a href="https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/raspberry_pi">object detection Raspberry Pi (github.com)</a>.</p>
+<blockquote>
+<p>The copyright of all the codes used in this example belongs to:</p>
+<pre><code class="language-python"><span class="hljs-comment"># Copyright 2021 The TensorFlow Authors. All Rights Reserved.</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="hljs-comment"># you may not use this file except in compliance with the License.</span>
+</code></pre>
+</blockquote>
+<p>Notice that the PiCamera shall be configured correctly as a prerequisite before running the example. The configuration of PiCamera is given elsewhere in <a href="https://www.notion.so/IoT-Service-Hazards-and-Risks-Detection-fb07207742704feca3e5f13ab4774389">IoT Service: Hazards and Risks Detection</a>.</p>
+<p><strong>Installation of TensorFlow Lite</strong></p>
+<p>Assume that Python is already installed in the system, and <code>python3</code>  used to execute Python. Use the following commands to install TensorFlow Lite.</p>
+<pre><code class="language-bash">$ python3 -m pip install pip --upgrade
+$ python3 -m pip install -r argparse, numpy, opencv-python
+$ python3 -m pip install -r tflite-runtime, tflite-support, protobuf
+</code></pre>
+<p><strong>Downloading Models</strong></p>
+<p>Pre-trained models are used in this example. Use the following commands to download the models used in this example.</p>
+<pre><code class="language-bash">curl \
+    -L <span class="hljs-string">&#x27;https://storage.googleapis.com/download.tensorflow.org/ \
+				models/tflite/task_library/object_detection/rpi/ \
+				lite-model_efficientdet_lite0_detection_metadata_1.tflite&#x27;</span> \
+    -o ./efficientdet_lite0.tflite
+curl \
+    -L <span class="hljs-string">&#x27;https://storage.googleapis.com/download.tensorflow.org/ \
+				models/tflite/task_library/object_detection/rpi/ \
+				efficientdet_lite0_edgetpu_metadata.tflite&#x27;</span> \
+    -o ./efficientdet_lite0_edgetpu.tflite
+</code></pre>
+<p>The <code>.tflite</code> are the trained models to be used in the example.</p>
+<p><strong>Executing Object Detection Program</strong></p>
+<p>Run the following command to execute the object detection program.</p>
+<pre><code class="language-bash">$ python3 detect.py --model efficientdet_lite0.tflite
+</code></pre>
+<p>where <code>[detect.py](http://detect.py)</code> is given by</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> argparse
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+
+<span class="hljs-keyword">import</span> cv2
+<span class="hljs-keyword">from</span> tflite_support.task <span class="hljs-keyword">import</span> core
+<span class="hljs-keyword">from</span> tflite_support.task <span class="hljs-keyword">import</span> processor
+<span class="hljs-keyword">from</span> tflite_support.task <span class="hljs-keyword">import</span> vision
+<span class="hljs-keyword">import</span> utils
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">model: <span class="hljs-built_in">str</span>, camera_id: <span class="hljs-built_in">int</span>, width: <span class="hljs-built_in">int</span>, height: <span class="hljs-built_in">int</span>, num_threads: <span class="hljs-built_in">int</span>,
+        enable_edgetpu: <span class="hljs-built_in">bool</span></span>) -&gt; <span class="hljs-literal">None</span>:
+  <span class="hljs-string">&quot;&quot;&quot;Continuously run inference on images acquired from the camera.
+  Args:
+    model: Name of the TFLite object detection model.
+    camera_id: The camera id to be passed to OpenCV.
+    width: The width of the frame captured from the camera.
+    height: The height of the frame captured from the camera.
+    num_threads: The number of CPU threads to run the model.
+    enable_edgetpu: True/False whether the model is a EdgeTPU model.
+  &quot;&quot;&quot;</span>
+
+  <span class="hljs-comment"># Variables to calculate FPS</span>
+  counter, fps = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+  start_time = time.time()
+
+  <span class="hljs-comment"># Start capturing video input from the camera</span>
+  cap = cv2.VideoCapture(camera_id)
+  cap.<span class="hljs-built_in">set</span>(cv2.CAP_PROP_FRAME_WIDTH, width)
+  cap.<span class="hljs-built_in">set</span>(cv2.CAP_PROP_FRAME_HEIGHT, height)
+
+  <span class="hljs-comment"># Visualization parameters</span>
+  row_size = <span class="hljs-number">20</span>  <span class="hljs-comment"># pixels</span>
+  left_margin = <span class="hljs-number">24</span>  <span class="hljs-comment"># pixels</span>
+  text_color = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>)  <span class="hljs-comment"># red</span>
+  font_size = <span class="hljs-number">1</span>
+  font_thickness = <span class="hljs-number">1</span>
+  fps_avg_frame_count = <span class="hljs-number">10</span>
+
+  <span class="hljs-comment"># Initialize the object detection model</span>
+  base_options = core.BaseOptions(
+      file_name=model, use_coral=enable_edgetpu, num_threads=num_threads)
+  detection_options = processor.DetectionOptions(
+      max_results=<span class="hljs-number">3</span>, score_threshold=<span class="hljs-number">0.3</span>)
+  options = vision.ObjectDetectorOptions(
+      base_options=base_options, detection_options=detection_options)
+  detector = vision.ObjectDetector.create_from_options(options)
+
+  <span class="hljs-comment"># Continuously capture images from the camera and run inference</span>
+  <span class="hljs-keyword">while</span> cap.isOpened():
+    success, image = cap.read()
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> success:
+      sys.exit(
+          <span class="hljs-string">&#x27;ERROR: Unable to read from webcam. Please verify your webcam settings.&#x27;</span>
+      )
+
+    counter += <span class="hljs-number">1</span>
+    image = cv2.flip(image, <span class="hljs-number">1</span>)
+
+    <span class="hljs-comment"># Convert the image from BGR to RGB as required by the TFLite model.</span>
+    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    <span class="hljs-comment"># Create a TensorImage object from the RGB image.</span>
+    input_tensor = vision.TensorImage.create_from_array(rgb_image)
+
+    <span class="hljs-comment"># Run object detection estimation using the model.</span>
+    detection_result = detector.detect(input_tensor)
+
+    <span class="hljs-comment"># Draw keypoints and edges on input image</span>
+    image = utils.visualize(image, detection_result)
+
+    <span class="hljs-comment"># Calculate the FPS</span>
+    <span class="hljs-keyword">if</span> counter % fps_avg_frame_count == <span class="hljs-number">0</span>:
+      end_time = time.time()
+      fps = fps_avg_frame_count / (end_time - start_time)
+      start_time = time.time()
+
+    <span class="hljs-comment"># Show the FPS</span>
+    fps_text = <span class="hljs-string">&#x27;FPS = {:.1f}&#x27;</span>.<span class="hljs-built_in">format</span>(fps)
+    text_location = (left_margin, row_size)
+    cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
+                font_size, text_color, font_thickness)
+
+    <span class="hljs-comment"># Stop the program if the ESC key is pressed.</span>
+    <span class="hljs-keyword">if</span> cv2.waitKey(<span class="hljs-number">1</span>) == <span class="hljs-number">27</span>:
+      <span class="hljs-keyword">break</span>
+    cv2.imshow(<span class="hljs-string">&#x27;object_detector&#x27;</span>, image)
+
+  cap.release()
+  cv2.destroyAllWindows()
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():
+  parser = argparse.ArgumentParser(
+      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+  parser.add_argument(
+      <span class="hljs-string">&#x27;--model&#x27;</span>,
+      <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;Path of the object detection model.&#x27;</span>,
+      required=<span class="hljs-literal">False</span>,
+      default=<span class="hljs-string">&#x27;efficientdet_lite0.tflite&#x27;</span>)
+  parser.add_argument(
+      <span class="hljs-string">&#x27;--cameraId&#x27;</span>, <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;Id of camera.&#x27;</span>, required=<span class="hljs-literal">False</span>, <span class="hljs-built_in">type</span>=<span class="hljs-built_in">int</span>, default=<span class="hljs-number">0</span>)
+  parser.add_argument(
+      <span class="hljs-string">&#x27;--frameWidth&#x27;</span>,
+      <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;Width of frame to capture from camera.&#x27;</span>,
+      required=<span class="hljs-literal">False</span>,
+      <span class="hljs-built_in">type</span>=<span class="hljs-built_in">int</span>,
+      default=<span class="hljs-number">640</span>)
+  parser.add_argument(
+      <span class="hljs-string">&#x27;--frameHeight&#x27;</span>,
+      <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;Height of frame to capture from camera.&#x27;</span>,
+      required=<span class="hljs-literal">False</span>,
+      <span class="hljs-built_in">type</span>=<span class="hljs-built_in">int</span>,
+      default=<span class="hljs-number">480</span>)
+  parser.add_argument(
+      <span class="hljs-string">&#x27;--numThreads&#x27;</span>,
+      <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;Number of CPU threads to run the model.&#x27;</span>,
+      required=<span class="hljs-literal">False</span>,
+      <span class="hljs-built_in">type</span>=<span class="hljs-built_in">int</span>,
+      default=<span class="hljs-number">4</span>)
+  parser.add_argument(
+      <span class="hljs-string">&#x27;--enableEdgeTPU&#x27;</span>,
+      <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;Whether to run the model on EdgeTPU.&#x27;</span>,
+      action=<span class="hljs-string">&#x27;store_true&#x27;</span>,
+      required=<span class="hljs-literal">False</span>,
+      default=<span class="hljs-literal">False</span>)
+  args = parser.parse_args()
+
+  run(args.model, <span class="hljs-built_in">int</span>(args.cameraId), args.frameWidth, args.frameHeight,
+      <span class="hljs-built_in">int</span>(args.numThreads), <span class="hljs-built_in">bool</span>(args.enableEdgeTPU))
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:
+  main()
+</code></pre>
+<p>and <code>[utils.py](http://utils.py)</code> by</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> cv2
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> tflite_support.task <span class="hljs-keyword">import</span> processor
+
+_MARGIN = <span class="hljs-number">10</span>  <span class="hljs-comment"># pixels</span>
+_ROW_SIZE = <span class="hljs-number">10</span>  <span class="hljs-comment"># pixels</span>
+_FONT_SIZE = <span class="hljs-number">1</span>
+_FONT_THICKNESS = <span class="hljs-number">1</span>
+_TEXT_COLOR = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>)  <span class="hljs-comment"># red</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">visualize</span>(<span class="hljs-params">
+    image: np.ndarray,
+    detection_result: processor.DetectionResult,
+</span>) -&gt; np.ndarray:
+  <span class="hljs-string">&quot;&quot;&quot;Draws bounding boxes on the input image and return it.
+  Args:
+    image: The input RGB image.
+    detection_result: The list of all &quot;Detection&quot; entities to be visualize.
+  Returns:
+    Image with bounding boxes.
+  &quot;&quot;&quot;</span>
+  <span class="hljs-keyword">for</span> detection <span class="hljs-keyword">in</span> detection_result.detections:
+    <span class="hljs-comment"># Draw bounding_box</span>
+    bbox = detection.bounding_box
+    start_point = bbox.origin_x, bbox.origin_y
+    end_point = bbox.origin_x + bbox.width, bbox.origin_y + bbox.height
+    cv2.rectangle(image, start_point, end_point, _TEXT_COLOR, <span class="hljs-number">3</span>)
+
+    <span class="hljs-comment"># Draw label and score</span>
+    category = detection.categories[<span class="hljs-number">0</span>]
+    category_name = category.category_name
+    probability = <span class="hljs-built_in">round</span>(category.score, <span class="hljs-number">2</span>)
+    result_text = category_name + <span class="hljs-string">&#x27; (&#x27;</span> + <span class="hljs-built_in">str</span>(probability) + <span class="hljs-string">&#x27;)&#x27;</span>
+    text_location = (_MARGIN + bbox.origin_x,
+                     _MARGIN + _ROW_SIZE + bbox.origin_y)
+    cv2.putText(image, result_text, text_location, cv2.FONT_HERSHEY_PLAIN,
+                _FONT_SIZE, _TEXT_COLOR, _FONT_THICKNESS)
+
+  <span class="hljs-keyword">return</span> image
+</code></pre>
+<p>For the above two introductions, the special thanks go to:</p>
+<ul>
+<li>Lakshmanan, Valliappa, Martin Görner, and Ryan Gillard. <em>Practical Machine Learning for Computer Vision</em>. &quot;O'Reilly Media, Inc.&quot;, 2021.</li>
+<li><a href="https://www.tensorflow.org/lite">TensorFlow Lite | ML for Mobile and Edge Devices</a>.</li>
+</ul>
+<p>Many source codes, models and examples used in these introductions are from either the above resources, or the TensorFlow GitHub repository <a href="https://github.com/tensorflow">tensorflow (github.com)</a>.</p>
+<h3 id="timeline-and-budget">Timeline and Budget</h3>
+<p>The project shall be completed by June 30, 2023, and the total budget planned for this project is 1000 SGD. The budget is used to purchase servers, IoT devices, and subscriptions of online resources.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost (S$)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beelink Mini PC Wi11 Pro, Mini S</td>
+<td>179.25</td>
+</tr>
+<tr>
+<td>TOTAL</td>
+<td>179.25</td>
+</tr>
+</tbody>
+</table>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </body>
+    </html>

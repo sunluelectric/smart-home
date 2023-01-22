@@ -68,10 +68,18 @@ TBA
 
 A web server is deployed in a container, on which a web interface is developed. PHP is used in the programming of the web interface. Details are given below.
 
-Apache is used as the website server. Make sure that the latest version of its corresponding docker image, `httpd`, is downloaded to the machine. To download and update the `httpd` image, use the following
+Apache is used as the website server. Make sure that the latest version of its corresponding docker image, `httpd`, is downloaded to the machine. A detailed introduction to the use of `httpd` can be found at [httpd](https://hub.docker.com/_/httpd "https://hub.docker.com/_/httpd") from docker hub.
+
+There are two ways to obtain the `httpd` image, namely building it using a docker file, or downloading it from docker hub. The second way is implemented here.
+
+To download and update the `httpd` image, use the following
 ```bash
 docker pull httpd
 ```
+where notice that if a specific version of `httpd` is required, use `httpd:<version>` in the above command instead.
+
+
+
 
 
 
