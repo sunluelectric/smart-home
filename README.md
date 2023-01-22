@@ -78,7 +78,12 @@ docker pull httpd
 ```
 where notice that if a specific version of `httpd` is required, use `httpd:<version>` in the above command instead.
 
+Start `httpd` container as follows
+```bash
+docker run -dit --name smart-home-server-web -p 8080:80 -v ~/smart-home/services/web/htdocs/:/usr/local/apache2/htdocs/ httpd
+```
 
+To verify whether the container is running correctly, save any `html` file inside `~/smart-home/services/web/htdocs/` (for demonstration, just download any sample `html` file from online). From any machine in the same LAN with the server, open a web browser and and browse to `http://<server-ip>:8080` to view the result.
 
 
 
