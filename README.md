@@ -66,7 +66,14 @@ TBA
 
 ### Web Interface
 
-A web server is deployed in a container, on which a web interface is developed. Details are given below.
+A web server is deployed in a container, on which a web interface is developed. PHP is used in the programming of the web interface. Details are given below.
+
+Apache is used as the website server. Make sure that the latest version of its corresponding docker image, `httpd`, is downloaded to the machine. To download and update the `httpd` image, use the following
+```bash
+docker pull httpd
+```
+
+
 
 ## Cloud Service: Data Archive and Remote Access to Smart Home Management System
 
@@ -95,6 +102,9 @@ sudo apt install gcc
 
 # install curl
 sudo apt install curl
+
+# install net-tools
+sudo apt install net-tools
 
 # install and configure git
 sudo apt install git
