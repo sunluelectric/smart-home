@@ -124,6 +124,14 @@ sudo apt install git
 git config --global user.name 'sunlu'
 git config --global user.email sunlu.electric@gmail.com
 
+# install and configure ftp server (ftps is not setup)
+sudo apt install vsftpd
+sudo systemctl start vsftpd
+sudo systemctl enable vsftpd
+sudo ufw allow 20/tcp # open port 20 and 21
+sudo ufw allow 21/tcp
+sudo systemctl restart vsftpd.service
+
 # install vim
 sudo apt install vim
 
@@ -183,6 +191,12 @@ sudo apt install octave
 sudo apt install octave-control octave-image octave-io octave-optim octave-signal octave-statistics
 
 ```
+
+To add a configuration file to jupyter notebook, use the following
+```bash
+jupyter notebook --generate-config
+```
+The generated configuration file can be edited by Vim to change some of the default features, such as root directory.
 
 Notice that since no monitor is connected to the server in most occasions, it makes no point starting a jupyter notebook on a local browser. It is possible to run jupyter notebook on the server, and access it remotely as follows.
 
