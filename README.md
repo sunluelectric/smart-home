@@ -167,10 +167,10 @@ bash Miniconda3-py310_22.11.1-1-Linux-x86_64.sh # Use the downloaded file name
 conda activate base
 conda update conda
 # create environment
-conda create --name smart-home-dev # smart home development general environment
-conda activate smart-home-dev
+conda create --name shserver-dev # smart home development general environment
+conda activate shserver-dev
 conda install conda
-# install useful packages in environment smart-home-dev
+# install useful packages in environment shserver-dev
 conda install numpy scipy pandas
 conda install scikit-learn
 conda install matplotlib
@@ -201,7 +201,7 @@ The generated configuration file can be edited by Vim to change some of the defa
 Notice that since no monitor is connected to the server in most occasions, it makes no point starting a jupyter notebook on a local browser. It is possible to run jupyter notebook on the server, and access it remotely as follows.
 
 ```bash
-conda activate smart-home-dev
+conda activate shserver-dev
 jupyter notebook --no-browser --port=8080 --ip=0.0.0.0
 ```
 
