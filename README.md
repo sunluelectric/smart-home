@@ -186,7 +186,6 @@ sudo apt update; sudo apt upgrade
 sudo apt install r-base
 
 # install octave and its packages
-cd
 sudo apt install octave
 sudo apt install octave-control octave-image octave-io octave-optim octave-signal octave-statistics
 
@@ -194,18 +193,25 @@ sudo apt install octave-control octave-image octave-io octave-optim octave-signa
 
 To add a configuration file to jupyter notebook, use the following
 ```bash
+conda activate shserver-dev
 jupyter notebook --generate-config
 ```
-The generated configuration file can be edited by Vim to change some of the default features, such as root directory.
-
-Notice that since no monitor is connected to the server in most occasions, it makes no point starting a jupyter notebook on a local browser. It is possible to run jupyter notebook on the server, and access it remotely as follows.
-
+The generated configuration file can be edited by Vim to change some of the default features, such as root directory. Search for `c.NotebookApp.notebook_dir` and change the value assigned to it to selected folder, such as
 ```bash
-conda activate shserver-dev
-jupyter notebook --no-browser --port=8080 --ip=0.0.0.0
+ c.NotebookApp.notebook_dir = '/home/sunlu/smart-home/services/jupyter-notebook/'
 ```
 
-Then in the remote machine, open a web browser and use URL `http://<server-ip>:8080` to access the jupyter notebook remotely.
+Notice that since no monitor is connected to the server in most occasions, it makes no point starting a jupyter notebook on a local browser. It is possible to run jupyter notebook on the server, and access it remotely as follows.
+```bash
+conda activate shserver-dev
+jupyter notebook --no-browser --port=8080 --ip=0.0.0.0 &
+```
+Then in the remote machine, open a web browser and use URL `http://<server-ip>:8080` to access the jupyter notebook remotely. To stop a jupyter notebook running in the background, use
+```bash
+jupyter notebook stop <port>
+```
+
+
 
 Install MariaDB as follows. In this project, MariaDB is the main DBMS to be adopted in the server.
 
