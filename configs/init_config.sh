@@ -6,6 +6,9 @@ echo "Update system..."
 sudo yum updateinfo
 sudo yum update
 
+# install gcc
+sudo yum install gcc
+
 # install curl
 echo "Install curl..."
 sudo yum install curl
@@ -13,6 +16,8 @@ sudo yum install curl
 # install git
 echo "Install git..."
 sudo yum install git
+git config --global user.name 'sunlu'
+git config --global user.email sunlu.electric@gmail.com
 
 # configure vim
 echo "Configure vim..."
@@ -57,6 +62,11 @@ echo "pasv_max_port=10100"
 echo "pasv_min_port=10090"
 # check /etc/vsftpd/vsftpd.conf for vsftpd configurations
 # add the following to the configuration file
+# anonymous_enable=NO
+# local_enable=YES
+# write_enable=YES
+# listen=NO
+# listen_ipv6=YES
 # pasv_enable=Yes
 # pasv_max_port=10100
 # pasv_min_port=10090

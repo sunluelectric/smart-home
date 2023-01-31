@@ -38,9 +38,11 @@ Reboot the server. The server hostname should have been changed. Use `hostnamect
 
 ## Initial Configurations
 
-The initial configuration procedures, such as configuring network connectivity, upgrade system, enable services, etc., are given in the following bash script.
+Install basic tools, software, and services following ["init\_config.sh"](./init_config.sh).
 
-See ["init\_config.sh"](./init_config.sh) for details.
+Install IDEs following ["init\_install\_ide.sh"](./init_install_ide.sh)
+
+
 
 ## Appendix: Administration Commands
 
