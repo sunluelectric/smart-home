@@ -40,6 +40,8 @@ Reboot the server. The server hostname should have been changed. Use `hostnamect
 
 Install basic tools, software, and services following ["init\_config.sh"](./init_config.sh).
 
+Generate SSH key and register the machine on GitHub following the instructions given by [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent "Generating a new SSH key and adding it to the ssh-agent").
+
 Install IDEs following ["init\_install\_ide.sh"](./init_install_ide.sh)
 
 

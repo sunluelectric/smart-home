@@ -79,6 +79,3 @@ sudo firewall-cmd --zone=public --add-port=990/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=10090-10100/tcp --permanent
 sudo systemctl restart vsftpd
 sudo firewall-cmd --reload
-
-
-
