@@ -1,6 +1,6 @@
 # Equipment Configuration
 
-This document illustrates the configurations of the equipment used in the smart home project. More details of the project can be found at the following github repository [sunluelectric/smart-home](https://github.com/sunluelectric/smart-home).
+This document illustrates the configurations of the equipment used in the smart home project. More details of the project can be found at the following github repository [sunluelectric/smart-home](https://github.com/sunluelectric/smart-home "https://github.com/sunluelectric/smart-home").
 
 The first device to be configured is the centralized server local to the home. Other equipment, such as IoT devices and the cloud platform, are configured from the server.
 
@@ -42,7 +42,7 @@ Install basic tools, software, and services following ["init\_install\_basics.sh
 Install FTP server, database management system, docker engine, etc., following the procedures given below.
 
 - FTP related: ["init_install_ftpserver.sh"](./init_install_ftpserver.sh).
-- Database related:
+- Database related: ["init\_install\_database.sh"](./init_install_database.sh); MariaDB is used as the DBMS. More details are given [here](https://mariadb.com/kb/en/yum/ "https://mariadb.com/kb/en/yum/").
 - Docker engine related:
 - Web service related:
 
