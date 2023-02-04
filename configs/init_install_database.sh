@@ -22,7 +22,7 @@ echo "Set administrator user password:"
 read -s user_password
 echo "Confirm password:"
 read -s user_password_confirm
-if [user_password==user_password_confirm]
+if [["$user_password"=="$user_password_confirm"]]
 then
     echo "GRANT ALL PRIVILEGES ON *.* TO '"$user_name"'@'localhost' IDENTIFIED BY '"$user_password"' WITH GRANT OPTION;" > add_admin.sql
     echo "FLUSH PRIVILEGES;" >> add_admin.sql
