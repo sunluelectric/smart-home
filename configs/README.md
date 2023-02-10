@@ -44,11 +44,22 @@ Install FTP server, database management system, docker engine, etc., following t
 - FTP related: ["init_install_ftpserver.sh"](./init_install_ftpserver.sh).
 - Database related: ["init\_install\_database.sh"](./init_install_database.sh); MariaDB is used as the DBMS. More details are given [here](https://mariadb.com/kb/en/yum/ "https://mariadb.com/kb/en/yum/").
 - Docker engine related:
-- Web service related:
+  - Web service related:
 
 ## Installation of IDEs
 
 Install IDEs following ["init\_install\_ide.sh"](./init_install_ide.sh).
+
+## Switching Booting Target
+
+Switch default booting target from `graphical.target` to `multi-user.target` as follows, to enable CLI as the default booting target.
+
+```bash
+systemctl get-default # check default target
+sudo systemctl set-default multi-user.target
+sudo reboot
+```
+
 
 ## Appendix: Administration Commands
 
