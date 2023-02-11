@@ -23,32 +23,28 @@ The information of the OS is as follows.
 
 ## Hostname Setup
 
-Use `hostnamectl` to check hostname information.
-
-Edit `/etc/hostname` and `/etc/hosts` to either add `shserver` or replace the default with `shserver`.
+Use `hostnamectl` to check hostname information. Edit `/etc/hostname` and `/etc/hosts` to either add `shserver` or replace the default with `shserver`. This shall change the hostname to `shserver`.
 
 Reboot the server. The server hostname should have been changed. Use `hostnamectl` to double check the changed hostname.
 
-## Generating SSH Key Pairs
+## SSH Key Pairs Generation
 
 Generate SSH key and register the machine on GitHub following the instructions given by [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent "Generating a new SSH key and adding it to the ssh-agent"). An SSH key helps to link a local repository to a remote repository in GitHub.
 
-## Installation of Basic Service Software
+## Installation of Software
 
-Install basic tools, software, and services following ["init\_install\_basics.sh"](./init_install_basics.sh).
+- Update system, install C language compiler, `curl` tool, SSH server, `git` tool, and configure Vim following ["init\_install\_basics.sh"](./init_install_basics.sh).
 
-## Installation of Advanced Service Software
+- Install FTP server, database management system and docker engine following the procedures given below.
+  - FTP related: ["init_install_ftpserver.sh"](./init_install_ftpserver.sh).
+  - Database related: ["init\_install\_database.sh"](./init_install_database.sh); MariaDB is used as the DBMS. More details are given [here](https://mariadb.com/kb/en/yum/ "https://mariadb.com/kb/en/yum/").
+  - Docker engine related:
+    - Web service related:
 
-Install FTP server, database management system, docker engine, etc., following the procedures given below.
-
-- FTP related: ["init_install_ftpserver.sh"](./init_install_ftpserver.sh).
-- Database related: ["init\_install\_database.sh"](./init_install_database.sh); MariaDB is used as the DBMS. More details are given [here](https://mariadb.com/kb/en/yum/ "https://mariadb.com/kb/en/yum/").
-- Docker engine related:
-  - Web service related:
-
-## Installation of IDEs
-
-Install IDEs following ["init\_install\_ide.sh"](./init_install_ide.sh).
+- Install IDEs as follows. 
+  - Python related: ["init\_install\_miniconda\_1.sh"](./init_install_miniconda_1.sh) and [init\_install\_miniconda\_2.sh](init_install_miniconda_2.sh).
+  - R related:[init\_install\_r.sh](init_install_r.sh).
+  - MATLAB/Octave related: [init\_install\_matlab\_octave.sh](init_install_matlab_octave.sh).
 
 ## Switching Booting Target
 
@@ -59,11 +55,3 @@ systemctl get-default # check default target
 sudo systemctl set-default multi-user.target
 sudo reboot
 ```
-
-
-## Appendix: Administration Commands
-
-- Check hardware: `sudo lshw`
-- Check OS: given in `/etc/os-release`
-- Check hostname: `hostnamectl`
-
