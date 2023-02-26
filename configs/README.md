@@ -1,10 +1,6 @@
-# Equipment Configuration
+This document summarizes the configurations of the equipment used in the smart home project. More details of the project can be found at the following github repository [sunluelectric/smart-home](https://github.com/sunluelectric/smart-home "https://github.com/sunluelectric/smart-home").
 
-This document illustrates the configurations of the equipment used in the smart home project. More details of the project can be found at the following github repository [sunluelectric/smart-home](https://github.com/sunluelectric/smart-home "https://github.com/sunluelectric/smart-home").
-
-The first device to be configured is the centralized server local to the home. Other equipment, such as IoT devices and the cloud platform, are configured from the server.
-
-# Centralized Server
+# Server
 
 ## Hardware and OS
 

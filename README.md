@@ -1,6 +1,6 @@
 # Project: Smart Home
 
-This project provides a smart home solution. Details are given in the rest of this README document. Source codes are given in the GitHub repository.
+This project provides a smart home solution. Details are given in the rest of this README document. Source codes are given in the GitHub repository under [sunluelectric/smart-home](https://github.com/sunluelectric/smart-home "https://github.com/sunluelectric/smart-home").
 
 Acknowledgement: This project is jointly developed by Sun Lu and Xing Zhe.
 
@@ -12,7 +12,7 @@ TBA
 
 ## Architecture Design
 
-The project adopts a 3-layer structure, namely the IoT, the (local) server, and the cloud platform layers.
+The project adopts a 3-layer structure, namely the IoT, the (local) server, and the cloud platform.
 
 The IoT devices collect measurements such as temperature, humidity, illumination and images, and subsequently upload them to the server. Some of them also provides HMI to the residents.
 
