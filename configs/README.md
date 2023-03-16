@@ -19,9 +19,7 @@ The information of the OS is as follows.
 
 ## Hostname Setup
 
-Use `hostnamectl` to check hostname information. Edit `/etc/hostname` and `/etc/hosts` to either add `shserver` or replace the default with `shserver`. This shall change the hostname to `shserver`.
-
-Reboot the server. The server hostname should have been changed. Use `hostnamectl` to double check the changed hostname.
+Use `hostnamectl` to check hostname information. Edit `/etc/hostname` and `/etc/hosts` to either add `shserver` or replace the default with `shserver`. This shall change the hostname to `shserver`. Reboot the server. The server hostname should be changed. Use `hostnamectl` to double check the changed hostname.
 
 ## SSH Key Pairs Generation
 
@@ -29,11 +27,28 @@ Generate SSH key and register the machine on GitHub following the instructions g
 
 ## Installation of Software
 
+The following table summarizes the tools that is essential on the server. Some of the tools should be preinstalled with the Linux.
+
+| Name | Type | Description |
+|:---- |:---- |:----------- |
+| gcc  | compiler/interpreter | a collection of compilers defined in GNU, including c/c++, Fortran, Go, etc. |
+| curl | tool | a software project providing libraries and tools for transferring data over network protocols |
+| openssh | service | a suite of secure networking utilities based on secure shell protocol, which provides a secure channel over network |
+| git | tool | a distributed version control tool that tracks changes in any set of computer files |
+| vim | tool | a text editing tool |
+| vsftpd | service | an FTP server for Linux |
+| MariaDB-server | service | a database management system |
+| miniconda | tool | a tool for Python environment management (package management); Python itself can be installed using miniconda |
+| r | compiler/interpreter | a compiler for R language |
+| octave | compiler/interpreter | an open compiler for MATLAB files |
+
+The above tools and services can be installed as follows.
+
 - Update system, install C language compiler, `curl` tool, SSH server, `git` tool, and configure Vim following ["init\_install\_basics.sh"](./init_install_basics.sh).
 
 - Install FTP server, database management system and docker engine following the procedures given below.
   - FTP related: ["init_install_ftpserver.sh"](./init_install_ftpserver.sh).
-  - Database related: ["init\_install\_database.sh"](./init_install_database.sh); MariaDB is used as the DBMS. More details are given [here](https://mariadb.com/kb/en/yum/ "https://mariadb.com/kb/en/yum/").
+  - Database related: ["init\_install\_dbms.sh"](./init_install_dbms.sh); MariaDB is used as the DBMS. More details are given [here](https://mariadb.com/kb/en/yum/ "https://mariadb.com/kb/en/yum/").
   - Docker engine related:
     - Web service related:
 
