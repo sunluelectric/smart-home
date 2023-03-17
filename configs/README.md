@@ -66,3 +66,7 @@ systemctl get-default # check default target
 sudo systemctl set-default multi-user.target
 sudo reboot
 ```
+
+# IoT Equipment
+
+# Amazon Web Service
