@@ -1,18 +1,20 @@
-# Project: Smart Home
+# **Project: Smart Home**
 
 This project provides a smart home solution. Details are given in the rest of this README document. Source codes are given in the GitHub repository under [sunluelectric/smart-home](https://github.com/sunluelectric/smart-home "https://github.com/sunluelectric/smart-home").
 
-Acknowledgement: This project is jointly developed by Sun Lu and Xing Zhe.
+Acknowledgement: this project is jointly developed by Sun Lu and Xing Zhe.
 
----
+# Introduction
 
-## Introduction
+The aim of the project is to develop a simple yet "all-in-one" smart home solution. The solution by itself might not be fancy, but it should be easily expandable for new functions and ideas.
 
-TBA
+The project also provides a platform to test a few techniques that have been increasingly popular in the past few years, including state-of-art computer vision techniques, cloud integration, natural language processing, etc. The features included in this project is evolving with time. See the rest of the repository for more details.
 
-## Architecture Design
+Most part of the project is realized in Python. R and MATLAB/Octave might be used for a small portion of data processing.
 
-The project adopts a 3-layer structure, namely the IoT, the (local) server, and the cloud platform.
+# Architecture Design
+
+The project adopts a 3-layer structure, namely the IoT, the (local) server, and the cloud.
 
 The IoT devices collect measurements such as temperature, humidity, illumination and images, and subsequently upload them to the server. Some of them also provides HMI to the residents.
 
@@ -22,7 +24,7 @@ The server is configured as a gateway to the Amazon Web Services cloud platform.
 
 Each above layer is associated with an human-machine interface. Some of the IoT devices may provide simple interfaces, allowing the residents to quickly check and control some of the sensors and actuators deployed in the home. The server provides a web based interface that allows the residents to interact with the smart home management system. Finally in the upper layer, the cloud provides an interface for remote access to the smart home management system as well as checking archived data.
 
-### General Architecture Design
+## General Architecture Design
 
 The architecture of the solution of the project is given below.
 
@@ -30,41 +32,41 @@ The architecture of the solution of the project is given below.
 
 Local to the home, a router and a switch are used to create the LAN/WLAN network. A local server, together with local storages, is deployed to provide local services such as access management, local database, graphical user interface, etc. The local server and storages should function normally in the case of an internet blackout.
 
-Microcomputer/microcontroller based IoT devices are deployed to provide distributed monitoring and control services. For example, in the temperature and air quality control service, temperature and humidity sensors are installed on the IoT devices distributed in different rooms, using which data is collected, analyzed, then used for the control of air conditioners, dehumidifiers and purifiers. 
+Microcomputer/microcontroller based IoT devices are deployed to provide distributed monitoring and control services. For example, in the temperature and air quality control service, temperature and humidity sensors are installed on the IoT devices distributed in different rooms, using which data is collected, analyzed, then used for the control of air conditioners, dehumidifiers and purifiers.
 
 AWS is used to provide cloud services. AWS Client VPN is used for secure connection between the local system and the cloud system. Data collected from the smart home is periodically uploaded to the cloud for analysis. Database and data archive functions are integrated into the cloud system. A webpage is deployed for remote access to the smart home.
 
-### Architecture Designs of Each Component
+## Architecture Designs of Each Component
 
 The architecture designs of the main components of the solution, namely the IoT devices, the local server and storage system, and the cloud system, are introduced as follows.
 
-#### IoT Devices
+### IoT Devices
 
 TBA
 
-#### Local Server and Storage
+### Local Server and Storage
 
 TBA
 
-#### Cloud
+### Cloud
 
 TBA
 
-## IoT Service: Temperature and Air Quality Control
+# IoT Service: Temperature and Air Quality Control
 
 TBA
 
-## IoT Service: Illumination Control
+# IoT Service: Illumination Control
 
 TBA
 
-## IoT Service: Hazards and Risks Detection
+# IoT Service: Hazards and Risks Detection
 
 TBA
 
-## Centralized Service: Smart Home Management System
+# Centralized Service: Smart Home Management System
 
-### Web Interface
+## Web Interface
 
 A web server is deployed in a container, on which a web interface is developed. PHP is used in the programming of the web interface. Details are given below.
 
@@ -73,38 +75,38 @@ Apache is used as the website server. Make sure that the latest version of its c
 There are two ways to obtain the `httpd` image, namely building it using a docker file, or downloading it from docker hub. The second way is implemented here.
 
 To download and update the `httpd` image, use the following
+
 ```bash
 docker pull httpd
 ```
+
 where notice that if a specific version of `httpd` is required, use `httpd:<version>` in the above command instead.
 
 Start `httpd` container as follows
+
 ```bash
 docker run -dit --name smart-home-server-web -p 80:80 -v ~/smart-home/services/web/htdocs/:/usr/local/apache2/htdocs/ --restart always httpd
 ```
 
 To verify whether the container is running correctly, save any `html` file inside `~/smart-home/services/web/htdocs/` (for demonstration, just download any sample `html` file from online). From any machine in the same LAN with the server, open a web browser and and browse to `http://<server-ip>` to view the result.
 
-
-
-
-## Cloud Service: Data Archive and Remote Access to Smart Home Management System
+# Cloud Service: Data Archive and Remote Access to Smart Home Management System
 
 TBA
 
-## Conclusions
+# Conclusions
 
 TBA
 
-## Appendix
+# Appendix
 
 Basic setups, backgrounds, list of materials and project budget are given in the Appendix.
 
-### Local Server Setup
+## Local Server Setup
 
 Beelink Mini PC Wi11 Pro, Mini S with Ubuntu 22.04 LTS (minimal installation) is used as the starting point of the smart home local server. Upon completion of installation, the PC shall have a sudo user and a hostname, and shall have internet connection.
 
-The following installations form the basis of the server infrastructure, and only after they are installed can we proceed with other software installations. 
+The following installations form the basis of the server infrastructure, and only after they are installed can we proceed with other software installations.
 
 ```bash
 # update system
@@ -152,7 +154,7 @@ For the convenience of project development, the repository on GitHub, sunluelect
 
 Follow the instructions given by GitHub given [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to generate SSH key pair and register the public key at GitHub. Use `git clone` to clone the project folder to the server.
 
-The following installations form the basic development environment in the server. The “centralized intelligence” of the server will be built from these installations, and shared among all the services the server is to provide. 
+The following installations form the basic development environment in the server. The “centralized intelligence” of the server will be built from these installations, and shared among all the services the server is to provide.
 
 ```bash
 # install and configure Python
@@ -192,26 +194,30 @@ sudo apt install octave-control octave-image octave-io octave-optim octave-signa
 ```
 
 To add a configuration file to jupyter notebook, use the following
+
 ```bash
 conda activate shserver-dev
 jupyter notebook --generate-config
 ```
+
 The generated configuration file can be edited by Vim to change some of the default features, such as root directory. Search for `c.NotebookApp.notebook_dir` and change the value assigned to it to selected folder, such as
+
 ```bash
  c.NotebookApp.notebook_dir = '/home/sunlu/smart-home/services/jupyter-notebook/'
 ```
 
 Notice that since no monitor is connected to the server in most occasions, it makes no point starting a jupyter notebook on a local browser. It is possible to run jupyter notebook on the server, and access it remotely as follows.
+
 ```bash
 conda activate shserver-dev
 jupyter notebook --no-browser --port=8080 --ip=0.0.0.0 &
 ```
+
 Then in the remote machine, open a web browser and use URL `http://<server-ip>:8080` to access the jupyter notebook remotely. To stop a jupyter notebook running in the background, use
+
 ```bash
 jupyter notebook stop <port>
 ```
-
-
 
 Install MariaDB as follows. In this project, MariaDB is the main DBMS to be adopted in the server.
 
@@ -244,7 +250,6 @@ skip-bind-address
 
 to the file.
 
-
 Finally, install docker engine as follows. Containerization is used to logically separate and enhance portability of the upper-layer functions and services, such as hosting a web page or a statistics dashboard.
 
 ```bash
@@ -266,15 +271,15 @@ sudo usermod <user-name> -aG docker
 
 The following services are executed in containers in the local server.
 
-### Brief Introduction to TensorFlow and TensorFlow Lite
+## Brief Introduction to TensorFlow and TensorFlow Lite
 
 TensorFlow and TensorFlow Lite are heavily used in the development of the project as the main artificial intelligence engines. Some introductions and examples to these tools are introduced0 as follows.
 
-#### TensorFlow
+### TensorFlow
 
 TensorFlow is one of the widely used ANN engines. It provides simple, yet powerful and flexible APIs and tools for different use cases and can be customized to meet needs of the users.
 
-Here, we are focusing on using TensorFlow to solve object detection problems. The examples are given from Valliappa Lakshmanan’s book titled *Practical Machine Learning for Computer Vision: End-to-End Machine Learning for Images*.
+Here, we are focusing on using TensorFlow to solve object detection problems. The examples are given from Valliappa Lakshmanan’s book titled _Practical Machine Learning for Computer Vision: End-to-End Machine Learning for Images_.
 
 Arthropod Taxonomy Orders Object Detection dataset from [Kaggle](https://www.kaggle.com/) is used in the example. Three different solutions, namely **You-Only-Look-Once (YOLO)**, **RetinaNet** and **Mask R-CNN** are discussed. Relevant models can be found at [TensorFlow Model Garden's official model repository (github.com)](https://github.com/tensorflow/models/tree/master/official).
 
@@ -297,11 +302,8 @@ Some highlights of the original YOLOv1 are given below.
 - Each cell detects an object whose ground truth box center is within the cell.
 - The last layer of the ANN decides the probability and boundary box coordinates of an item.
 - An internal variable, namely the “confidence”, is defined as the product of “the probability that there is an item in the boundary box” and “the overlapping between the boundary box and the ground true box”.
-    
-    To get a higher score, the boundary box needs to contain an effective item, and at the same time overlap the ground true box as close as possible. (Notice that both item classes and ground true boxes are known labels of an image.)
-    
-    When an item is associated with multiple boundary boxes, the one with the highest confidence score is eventually selected. This means that the ANN needs to predict the ground true box internally as well.
-    
+  To get a higher score, the boundary box needs to contain an effective item, and at the same time overlap the ground true box as close as possible. (Notice that both item classes and ground true boxes are known labels of an image.)
+  When an item is associated with multiple boundary boxes, the one with the highest confidence score is eventually selected. This means that the ANN needs to predict the ground true box internally as well.
 - Cost function consists of two components, the classification error and the boundary box coordinate error. For boundary box coordinate, only the selected box receives penalty, i.e., the boxes with wrong coordinates but not selected does not affect the cost function.
 
 YOLOv2-YOLOv5 improve the performance of the system by adopting different network structures and advanced technologies. Some highlights are as follows.
@@ -314,7 +316,7 @@ There is another technique for object detection, with a similar name You Only Le
 
 Notice that TensorFlow may not be well supported for all YOLO versions. For example, YOLOv5 is well supported for PyTorch usage, but not for TensorFlow.
 
-#### TensorFlow Lite
+### TensorFlow Lite
 
 TensorFlow Lite is the on-device machine learning interface optimized for mobile, embedded and edge devices for tasks including image classification, object detection, text classification, audio classification, and speech recognition, etc.
 
@@ -322,26 +324,24 @@ Different from a conventional TensorFlow implementation, TensorFlow Lite does no
 
 Notice that it is also possible to create simple customizable models using TensorFlow Lite Model Maker.
 
-End-to-end examples of implementing TensorFlow Lite on embedded Linux systems can be found at [TensorFlow Lite Examples](https://www.tensorflow.org/lite/examples). 
+End-to-end examples of implementing TensorFlow Lite on embedded Linux systems can be found at [TensorFlow Lite Examples](https://www.tensorflow.org/lite/examples).
 
 Here, the object detection on Raspberry Pi is used as an example to illustrate the installation and basic use of TensorFlow Lite. More details are given at [object detection Raspberry Pi (github.com)](https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/raspberry_pi).
 
 > The copyright of all the codes used in this example belongs to:
-> 
-> 
+>
 > ```python
 > # Copyright 2021 The TensorFlow Authors. All Rights Reserved.
 > #
 > # Licensed under the Apache License, Version 2.0 (the "License");
 > # you may not use this file except in compliance with the License.
 > ```
-> 
 
 Notice that the PiCamera shall be configured correctly as a prerequisite before running the example. The configuration of PiCamera is given elsewhere in [IoT Service: Hazards and Risks Detection](https://www.notion.so/IoT-Service-Hazards-and-Risks-Detection-fb07207742704feca3e5f13ab4774389).
 
 **Installation of TensorFlow Lite**
 
-Assume that Python is already installed in the system, and `python3`  used to execute Python. Use the following commands to install TensorFlow Lite.
+Assume that Python is already installed in the system, and `python3` used to execute Python. Use the following commands to install TensorFlow Lite.
 
 ```bash
 $ python3 -m pip install pip --upgrade
@@ -564,11 +564,11 @@ For the above two introductions, the special thanks go to:
 
 Many source codes, models and examples used in these introductions are from either the above resources, or the TensorFlow GitHub repository [tensorflow (github.com)](https://github.com/tensorflow).
 
-### Timeline and Budget
+## Timeline and Budget
 
 The project shall be completed by June 30, 2023, and the total budget planned for this project is 1000 SGD. The budget is used to purchase servers, IoT devices, and subscriptions of online resources.
 
-| Item | Cost (S$) |
-| --- | --- |
-| Beelink Mini PC Wi11 Pro, Mini S | 179.25 |
-| TOTAL | 179.25 |
+| Item                             | Cost (S$) |
+| -------------------------------- | --------- |
+| Beelink Mini PC Wi11 Pro, Mini S | 179.25    |
+| TOTAL                            | 179.25    |
