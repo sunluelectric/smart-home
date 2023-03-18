@@ -8,25 +8,23 @@ Acknowledgement: this project is jointly developed by Sun Lu and Xing Zhe.
 
 The aim of the project is to develop a simple yet "all-in-one" smart home solution. The solution by itself might not be fancy, but it should be easily expandable for new functions and ideas.
 
-The project also provides a platform to test a few techniques that have been increasingly popular in the past few years, including state-of-art computer vision techniques, cloud integration, natural language processing, etc. The features included in this project is evolving with time. See the rest of the repository for more details.
+The project also provides a platform to test techniques that have been increasingly popular in the past few years, including state-of-art computer vision algorithms, cloud integration, natural language processing, etc. The features included in this project is evolving with time. See the repository for more details.
 
-Most part of the project is realized in Python. R and MATLAB/Octave might be used for a small portion of data processing.
+Most of project is coded in Python, wherever possible. R and MATLAB might be integrated into the project when necessary.
 
 # Architecture Design
 
-The project adopts a 3-layer structure, namely the IoT, the (local) server, and the cloud.
+The project adopts a 3-layer structure. The 3 layers are, from low-level to high-level, the IoT, the (local) server, and the cloud layers.
 
-The IoT devices collect measurements such as temperature, humidity, illumination and images, and subsequently upload them to the server. Some of them also provides HMI to the residents.
+In the IoT layer, IoT equipment such as Raspberry Pi microcomputers are used to collect measurements such as temperature, humidity, illumination, images and sounds. They are subsequently upload to the server. Some IoT equiment is also used to provide HMI for the users.
 
-The server hosts a smart home management system that provides data acquisition, database and network-attached storage services. A graphical interface running on a webpage is developed in the server, which can be accessed using a browser from the LAN.
+In the server layer, a smart home management system is deployed on a server PC (RHEL server) to provide data acquisition, data processing and anlysis, database, and network-attached storage services. A web-based graphical interface is developed in the server that can be accessed using a browser from the LAN. The server is configured as a gateway to the third layer of the system, which is the cloud platform. The cloud platform archives the data generated from the smart home and provides remote access to the smart home management system.
 
-The server is configured as a gateway to the Amazon Web Services cloud platform. The cloud platform archives the data generated from the smart home and provides remote access to the smart home management system.
-
-Each above layer is associated with an human-machine interface. Some of the IoT devices may provide simple interfaces, allowing the residents to quickly check and control some of the sensors and actuators deployed in the home. The server provides a web based interface that allows the residents to interact with the smart home management system. Finally in the upper layer, the cloud provides an interface for remote access to the smart home management system as well as checking archived data.
+Finally in the cloud layer, a (read-only) interface for remote access to the smart home management system is deployed. The cloud is also used to archive data from the server.
 
 ## General Architecture Design
 
-The architecture of the solution of the project is given below.
+The architecture is given in the figure below.
 
 ![Project general architecture.](./readme-figs/smart-home-architecture.png)
 
@@ -36,35 +34,32 @@ Microcomputer/microcontroller based IoT devices are deployed to provide distribu
 
 AWS is used to provide cloud services. AWS Client VPN is used for secure connection between the local system and the cloud system. Data collected from the smart home is periodically uploaded to the cloud for analysis. Database and data archive functions are integrated into the cloud system. A webpage is deployed for remote access to the smart home.
 
-## Architecture Designs of Each Component
+The architecture designs of each layer, namely the IoT, the server and the cloud, are introduced separately as follows.
 
-The architecture designs of the main components of the solution, namely the IoT devices, the local server and storage system, and the cloud system, are introduced as follows.
-
-### IoT Devices
+## IoT
 
 TBA
 
-### Local Server and Storage
+## Server 
 
 TBA
 
-### Cloud
+## Cloud
 
 TBA
 
-# IoT Service: Temperature and Air Quality Control
 
-TBA
+# Work Packages
 
-# IoT Service: Illumination Control
+[ ] 1. Schema design
+[ ] 2. IoT Equipment Development and Deployment
+[ ] 3. Server Development and Deployment
+[ ] 4. Cloud Layer Development and Deployment
+[ ] 5. Knowledge Base
 
-TBA
+# Realization
 
-# IoT Service: Hazards and Risks Detection
-
-TBA
-
-# Centralized Service: Smart Home Management System
+The initial setup and realization of the project are given in separate sectors in the repository.
 
 ## Web Interface
 
