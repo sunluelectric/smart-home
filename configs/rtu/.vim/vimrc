@@ -1,46 +1,46 @@
-  1 "plugin
-  2 call plug#begin()
-  3 Plug 'vim-airline/vim-airline'
-  4 Plug 'joshdick/onedark.vim'
-  5 call plug#end()
-  6
-  7 "map keys
-  8 inoremap jj <Esc>
-  9 noremap s <nop>
- 10 map S :w<CR>
- 11 map Q :q<CR>
- 12
- 13 "syntax
- 14 syntax on
- 15 colorscheme onedark
- 16 set number
- 17 set cursorline
- 18 set wrap
- 19 set wildmenu
- 20
- 21 "scroll
- 22 set scrolloff=3
- 23 map sc :set spell!<CR>
- 24
- 25 "search
- 26 set hlsearch
- 27 exec "nohlsearch"
- 28 set incsearch
- 29 noremap <Space> :nohlsearch<CR>
- 30 set ignorecase
- 31 noremap = nzz
- 32 noremap - Nzz
- 33
- 34 "split screen
- 35 noremap sh :set nosplitright<CR>:vsplit<CR>
- 36 noremap sl :set splitright<CR>:vsplit<CR>
- 37 noremap sk :set nosplitbelow<CR>:split<CR>
- 38 noremap sj :set splitbelow<CR>:split<CR>
- 39 noremap <C-h> <C-w>h
- 40 noremap <C-l> <C-w>l
- 41 noremap <C-j> <C-w>j
- 42 noremap <C-k> <C-w>k
- 43 noremap H :vertical resize-1<CR>
- 44 noremap L :vertical resize+1<CR>
- 45 noremap J :res-1<CR>
- 46 noremap K :res+1<CR>
+"plugin
+call plug#begin()
+Plug 'vim-airline/vim-airline'
+Plug 'joshdick/onedark.vim'
+call plug#end()
+
+"map keys
+inoremap jj <Esc>
+noremap s <nop>
+map S :w<CR>
+map Q :q<CR>
+
+"syntax
+syntax on
+colorscheme onedark
+set number
+set cursorline
+set wrap
+set wildmenu
+
+"scroll
+set scrolloff=3
+map sc :set spell!<CR>
+
+"search
+set hlsearch
+exec "nohlsearch"
+set incsearch
+noremap <Space> :nohlsearch<CR>
+set ignorecase
+noremap = nzz
+noremap - Nzz
+
+"split screen
+noremap sh :set nosplitright<CR>:vsplit<CR>
+noremap sl :set splitright<CR>:vsplit<CR>
+noremap sk :set nosplitbelow<CR>:split<CR>
+noremap sj :set splitbelow<CR>:split<CR>
+noremap <C-h> <C-w>h
+noremap <C-l> <C-w>l
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap H :vertical resize-1<CR>
+noremap L :vertical resize+1<CR>
+noremap J :res-1<CR>
+noremap K :res+1<CR>
