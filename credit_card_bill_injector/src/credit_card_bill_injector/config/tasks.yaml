@@ -1,0 +1,107 @@
+manage_card_database:
+  description: >
+    Receive a CardInfo object from the upstream agent. Use the 'PostgreSQL Query Executor' tool to first check if the card already exists in the 'cards' table using the issuer and last4 digits. If not, generate an SQL INSERT query to add the new card. If it exists, generate an SQL UPDATE query to update any placeholder values with valid data from the CardInfo object.
+  expected_output: >
+    A simple confirmation message, such as 'Card added successfully' or 'Card updated successfully', or 'No changes needed'.
+  agent: credit_card_manager
+  context:
+    - parse_bill
+
+manage_merchants:
+  description: >
+    Receive a structured Pydantic object from the upstream agent and process the `transactions` list within it. For each unique merchant, check for its existence in the 'merchants' table. If the merchant is new, decide if it should be added to the database based on its frequency (3+ times) or prominence. If so, use online search to gather details and generate an SQL INSERT query for the new merchant.
+  expected_output: >
+    A summary of the actions taken, for example, 'Analyzed 15 merchants. Added 3 new merchants to the database: [list of new merchant names]'.
+  agent: merchant_manager
+  context:
+    - parse_bill
+
+manage_transactions:
+  description: >
+    Receive a structured Pydantic object from the upstream agent and process the `transactions` list within it. For each transaction, check for its existence in the `card_transactions` table. If it's a new transaction, use the 'PostgreSQL Query Executor' tool to retrieve the `card_id` from the `cards` table and the `merchant_id` from the `merchants` table. Once the required IDs are found, generate an SQL INSERT query to add the transaction to the database.
+  expected_output: >
+    A summary of the actions taken, such as 'Processed 25 transactions. Added 20 new transactions to the database.'
+  agent: credit_card_transaction_manager
+  context:
+    - parse_bill
+    - manage_card_database
+    - manage_merchants
+
+parse_bill:
+  description: |
+    You are given the full raw text of a credit card bill between the delimiters.
+    Extract a single JSON object that strictly matches the BillAnalysis schema
+    (card_info, statement_summary, transactions). Return ONLY JSON (no Markdown).
+
+    ---BEGIN BILL TEXT---
+    {bill_content}
+    ---END BILL TEXT---
+
+    ## Source format & extraction rules (OCBC examples)
+    - The issuer is "OCBC Bank" if present. Customer name appears near the top (e.g., "SUN, LU").
+    - Card number appears like "XXXX-XXXX-XXXX-6684" → last4 = "6684".
+    - Statement date appears as "STATEMENT DATE" followed by either "01-07-2023" or "01 JUL 23".
+      * Normalize ALL dates to YYYY-MM-DD.
+      * If you see DD/MM (e.g., "31/05"), infer the year from the statement date’s year.
+      * If the date is like "01 JUL 23", map month names to numbers and expand "23" to "2023".
+    - Minimum payment and due date appear as "TOTAL MINIMUM DUE" and "PAYMENT DUE DATE".
+    - Totals often appear as "TOTAL AMOUNT DUE" and/or "TOTAL".
+    - "LAST MONTH'S BALANCE" is the previous balance.
+    - Payments/credits may be shown in parentheses (e.g., "(1,657.81 PAYMENT BY INTERNET)") → treat as negative amounts for payments_and_credits.
+    - Transaction section looks like:
+        TRANSACTION DATE
+        DESCRIPTION
+        AMOUNT (SGD)
+      Followed by blocks such as:
+        "31/05"
+        "NINTENDO ... (extra lines like FOREIGN CURRENCY ...)"
+        "112.00"
+      * Merchant names may span multiple lines; join them into a single merchant_name string with spaces.
+      * Use the SGD number shown in the AMOUNT column as the transaction amount.
+      * Use currency "SGD" unless explicitly stated otherwise for the final charged amount.
+      * Parentheses around amounts mean negative/refund (e.g., "(194.40 ANNUAL FEE WAIVER)").
+      * Include fees/rebates as transactions with merchant_name like "ANNUAL FEE", "ANNUAL FEE WAIVER", "CASH REBATE", etc.
+      * Ignore boilerplate text (contact info, headings, totals/subtotals rows).
+    - Set card_status to "Active" unless the bill explicitly indicates otherwise.
+    - Set card_network to null unless you can reliably infer it (do NOT guess).
+
+    ## Output schema (strict)
+    {
+      "card_info": {
+        "customer_name": "string",
+        "issuer": "string",
+        "card_network": "string|null",
+        "last4": "string",
+        "statement_date": "YYYY-MM-DD",
+        "card_status": "string"
+      },
+      "statement_summary": {
+        "previous_balance": number,
+        "payments_and_credits": number,
+        "new_charges": number,
+        "new_balance": number,
+        "minimum_payment": number,
+        "minimum_payment_due_date": "YYYY-MM-DD"
+      },
+      "transactions": [
+        {
+          "date": "YYYY-MM-DD",
+          "merchant_name": "string",
+          "amount": number,
+          "currency": "SGD",
+          "raw_entity": "string"  // a concise slice of the original lines used
+        }
+      ]
+    }
+
+    ## Validation & normalization
+    - Use null for unknowns rather than inventing values.
+    - All numbers must be plain numbers (no currency symbols, commas, or parentheses).
+      * For negative amounts shown as "(xxx.xx)", output a negative number (e.g., -194.40).
+    - Dates must be ISO "YYYY-MM-DD".
+    - Ensure totals are consistent: new_balance ≈ previous_balance - payments_and_credits + new_charges.
+
+  expected_output: >
+    A single JSON object that validates against the BillAnalysis Pydantic schema. No additional text.
+  agent: credit_bill_parser
+

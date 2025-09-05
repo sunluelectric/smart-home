@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets
+.env
+.secrets/
+credentials.json
+token.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+
+
+
